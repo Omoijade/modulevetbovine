@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Économie de l'exploitation bovine — Module en ligne</title>
+
+<style>
+:root{--fond:#f4f6f8;--surface:#fff;--doux:#f7f9fb;--texte:#16202a;--gris:#5d6977;--ligne:#d8e0e8;--bleu:#1557d6;--bleu-fond:#eaf1ff;--vert:#15794f;--vert-fond:#e6f5ee;--orange:#9a5200;--orange-fond:#fff2df;--rouge:#b42d43;--nuit:#13263b}
+*{box-sizing:border-box}
+.mod{margin:0 auto;max-width:780px;padding:0 16px 48px;color:var(--texte);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fond)}
+.mod h1,.mod h2,.mod h3{line-height:1.25;margin:0 0 .5em}
+.mod h1{font-size:1.7rem}.mod h2{font-size:1.4rem}.mod h3{font-size:1.12rem;margin-top:1.4em}
+.mod p{margin:.6em 0}
+.mod button{font:inherit;cursor:pointer}
+.entete{margin:0 -16px;padding:22px 16px 18px;color:#fff;background:var(--nuit)}
+.entete p{margin:.2em 0;color:#c9d6e3}
+.entete .sur{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#9fb3c8}
+.chapitre{display:block;padding:26px 0 10px;border-bottom:1px solid var(--ligne)}
+.chapitre .num{display:block;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--bleu)}
+.duree{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:99px;background:var(--doux);color:var(--gris);font-size:.75rem;font-weight:700;text-transform:none;letter-spacing:0}
+.situation{margin:18px 0;padding:14px 18px;border-left:5px solid var(--bleu);border-radius:0 12px 12px 0;background:var(--bleu-fond)}
+.situation .qui{display:block;font-size:.78rem;font-weight:800;color:var(--bleu);text-transform:uppercase;letter-spacing:.05em}
+.situation p{margin:.3em 0}
+.carte{margin:18px 0;padding:16px 18px;border:1px solid var(--ligne);border-radius:14px;background:var(--surface)}
+.retenir{margin:22px 0;padding:14px 18px;border-radius:14px;background:var(--vert-fond);border:1px solid #a9dcc4}
+.retenir h3{color:var(--vert);margin-top:0}
+.retenir ul,.retenir ol{margin:.4em 0;padding-left:1.2em}
+.terme{display:inline;padding:0 3px;border-radius:5px;background:var(--bleu-fond);color:var(--bleu);font-weight:700;border-bottom:2px dotted var(--bleu);cursor:pointer}
+.terme:focus-visible{outline:3px solid rgba(21,87,214,.35)}
+.activite{margin:22px 0;padding:16px 18px;border:2px solid #c8d4e2;border-radius:14px;background:var(--surface)}
+.activite .etiquette{display:block;font-size:.75rem;font-weight:850;text-transform:uppercase;letter-spacing:.07em;color:var(--orange)}
+.consigne{font-weight:700}
+.option{display:flex;gap:10px;align-items:flex-start;margin:6px 0;padding:10px 12px;border:1px solid var(--ligne);border-radius:10px;background:var(--doux);line-height:1.45}
+.option input{margin-top:.25em;flex:0 0 auto;width:18px;height:18px}
+.option.bonne{border-color:#8fd0b2;background:var(--vert-fond)}
+.option.fausse{border-color:#f0c68b;background:var(--orange-fond)}
+.saisie{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.saisie input,.mod textarea,.mod select,.champ input{font:inherit;padding:9px 11px;border:1px solid var(--ligne);border-radius:10px;background:#fff;color:var(--texte)}
+.saisie input{width:11em;max-width:100%}
+.mod textarea{width:100%;min-height:6em;line-height:1.5}
+.bouton{min-height:44px;padding:9px 16px;border:1px solid var(--ligne);border-radius:10px;background:#fff;color:var(--texte);font-weight:750}
+.bouton.principal{border-color:var(--bleu);background:var(--bleu);color:#fff}
+.bouton:disabled{opacity:.5;cursor:default}
+.retour{margin:10px 0 0;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.retour.ok{background:var(--vert-fond);color:#0d5a3a}
+.retour.non{background:var(--orange-fond);color:#6e3a00}
+.mod details{margin:12px 0 0;border-top:1px dashed var(--ligne);padding-top:10px}
+.mod summary{cursor:pointer;font-weight:750;color:var(--bleu);min-height:32px}
+.mod details>div{margin-top:8px}
+.item{margin:10px 0;padding:10px 12px;border:1px solid var(--ligne);border-radius:10px;background:var(--doux)}
+.item>span{display:block;font-weight:700;margin-bottom:6px}
+.choix{display:flex;flex-wrap:wrap;gap:6px}
+.choix button{min-height:40px;padding:6px 12px;border:1px solid var(--ligne);border-radius:99px;background:#fff;font-size:.92rem;font-weight:700}
+.choix button.bonne{border-color:var(--vert);background:var(--vert);color:#fff}
+.choix button.fausse{border-color:var(--orange);background:var(--orange-fond);color:var(--orange)}
+.defile{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mod table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}
+.mod th,.mod td{padding:7px 8px;border-bottom:1px solid var(--ligne);text-align:right;vertical-align:top}
+.mod th:first-child,.mod td:first-child{text-align:left}
+.mod thead th{font-size:.78rem;color:var(--gris);text-transform:uppercase;letter-spacing:.03em}
+.cascade{margin:16px 0;display:grid;gap:6px}
+.cascade div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 12px;border-radius:10px;background:var(--doux)}
+.cascade div b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.cascade .moins{background:#fff;border:1px dashed var(--ligne)}
+.cascade .total{background:var(--bleu-fond);font-weight:800}
+.cascade .final{background:var(--vert-fond);font-weight:800}
+.deux{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.barres{display:grid;gap:5px;margin:12px 0}
+.barre{display:grid;grid-template-columns:9.5em minmax(0,1fr) 3em;gap:8px;align-items:center;font-size:.9rem}
+.barre i{display:block;height:14px;border-radius:4px;background:#9db6d8}
+.barre.vet i{background:var(--bleu)}.barre.vet{font-weight:800}
+.calc{display:grid;gap:10px}
+.calc label{display:grid;gap:4px;font-weight:700;font-size:.95rem}
+.calc output{display:block;padding:10px 12px;border-radius:10px;background:var(--bleu-fond);font-weight:750}
+.calc input{font:inherit;width:100%;padding:9px 11px;border:1px solid var(--ligne);border-radius:10px;background:#fff}
+.lignes-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sommaire,.navchap,.js-seulement,.feuille{display:none}
+.sans-js{display:block}
+.source{font-size:.82rem;color:var(--gris)}
+.champ{display:grid;gap:4px;margin:12px 0;font-weight:700}
+.echelle{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.echelle label{display:flex;align-items:center;gap:6px;padding:7px 11px;border:1px solid var(--ligne);border-radius:99px;background:#fff;font-weight:600;font-size:.92rem}
+.question-eval{margin:14px 0;padding-bottom:6px;border-bottom:1px solid var(--ligne)}
+.question-eval>p{font-weight:700;margin-bottom:2px}
+.resume{white-space:pre-wrap;padding:12px;border-radius:10px;background:var(--doux);font-size:.9rem;border:1px solid var(--ligne)}
+.diag-item{margin:16px 0;padding:14px 16px;border:1px solid var(--ligne);border-radius:12px;background:#fff}
+.diag-item .q{font-weight:700;margin:0 0 6px}
+.diag-item .avant{font-size:.88rem;color:var(--gris)}
+.lexique .fiche{margin:14px 0;padding:12px 14px;border:1px solid var(--ligne);border-radius:12px;background:#fff}
+.lexique .fiche h3{margin:0 0 6px;font-size:1.05rem}
+.lexique .fiche p,.feuille p{margin:0}
+/* With the script: one chapter at a time, a table of contents, chapter navigation, term sheets,
+   and each answer offered only once the student has answered. */
+.js .chapitre[hidden]{display:none}
+.js .js-seulement{display:block}
+.js .sans-js{display:none}
+.js details.reponse.verrouille{display:none}
+.js .sommaire{display:block;position:sticky;top:0;z-index:5;margin:0 -16px;padding:8px 16px;background:rgba(244,246,248,.97);border-bottom:1px solid var(--ligne)}
+.sommaire-haut{display:flex;align-items:center;gap:10px}
+.sommaire-haut select{flex:1;min-width:0;font:inherit;font-size:.92rem;padding:8px 10px;border:1px solid var(--ligne);border-radius:10px;background:#fff}
+.progres{height:5px;margin-top:8px;border-radius:5px;background:var(--ligne);overflow:hidden}
+.progres i{display:block;height:100%;width:0;background:var(--bleu)}
+.js .navchap{display:flex;justify-content:space-between;gap:10px;margin:26px 0 8px}
+.js .feuille.ouverte{display:block;position:fixed;left:0;right:0;bottom:0;z-index:50;max-height:70vh;overflow:auto;padding:18px 18px 24px;background:#fff;border-top:3px solid var(--bleu);border-radius:18px 18px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25)}
+.feuille-tete{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.feuille-tete h3{margin:0;font-size:1.12rem}
+.feuille-tete button{flex:0 0 auto;width:40px;height:40px;border:0;border-radius:50%;background:#e7edf3;font-size:22px}
+@media (min-width:900px){.js .feuille.ouverte{left:auto;right:24px;bottom:24px;width:440px;border-radius:16px;border:1px solid var(--ligne);border-top:3px solid var(--bleu)}}
+@media (max-width:560px){.mod{font-size:16px}.deux{grid-template-columns:1fr}.barre{grid-template-columns:7.5em minmax(0,1fr) 2.6em}.mod h1{font-size:1.4rem}}
+@media print{.sommaire,.navchap,.js-seulement,.feuille,.mod details summary,.bouton{display:none!important}.js .chapitre[hidden],.js details.reponse.verrouille{display:block}.mod details>div{display:block}}
+</style>
+</head>
+<body style="margin:0;background:#f4f6f8">
+<div class="mod" id="module">
+
+<header class="entete">
+  <span class="sur">Gestion de la santé et des productions des ruminants · module en ligne · environ 1&nbsp;h&nbsp;30</span>
+  <h1>Économie de l'exploitation bovine</h1>
+  <p>Prix, comptabilité de gestion et viabilité des exploitations, du point de vue du vétérinaire.</p>
+</header>
+
+<nav class="sommaire" aria-label="Sommaire">
+  <div class="sommaire-haut"><label for="aller" class="source" style="white-space:nowrap">Aller à</label><select id="aller"></select></div>
+  <div class="progres" aria-hidden="true"><i></i></div>
+</nav>
+<p class="sans-js source">Les termes surlignés en bleu sont définis dans le lexique, à la fin du module.</p>
+
+<section class="chapitre" id="accueil" data-titre="Introduction" data-minutes="3">
+  <span class="num">Introduction <span class="duree">3 min</span></span>
+  <h2>Objectifs et organisation du module</h2>
+  <p>Le vétérinaire rural intervient dans des exploitations dont il doit comprendre l'économie : ses recommandations — un plan de santé, un traitement, un audit — engagent des dépenses, et leur pertinence dépend de ce qu'elles rapportent à l'éleveur et de la capacité de l'exploitation à les supporter. Ce module donne les bases nécessaires pour lire les comptes d'une exploitation bovine et apprécier sa viabilité.</p>
+  <div class="situation"><span class="qui">Le fil conducteur</span>
+    <p>Vous suivez depuis plusieurs années le troupeau de la ferme du Thier, une exploitation laitière wallonne de 60 vaches sur 45 hectares, tenue par Marc et Claire ; leur fils Léo envisage de la reprendre. Vous suivez également l'élevage de bovins à viande de leur voisine, Sophie. Les chiffres de la ferme du Thier serviront d'exemple tout au long du module.</p>
+  </div>
+  <div class="carte"><h3 style="margin-top:0">Objectifs d'apprentissage</h3>
+    <p>À l'issue du module, vous serez capable de :</p>
+    <ol>
+      <li>interpréter un prix agricole : composition du prix du lait, modes de vente et classement des bovins ;</li>
+      <li>classer les <span class="terme" data-fiche="produits" role="button" tabindex="0">produits</span> et les charges d'une exploitation selon les distinctions de la comptabilité de gestion ;</li>
+      <li>calculer les soldes de gestion — <span class="terme" data-fiche="mb" role="button" tabindex="0">marge brute</span>, <span class="terme" data-fiche="vab" role="button" tabindex="0">valeur ajoutée brute</span>, <span class="terme" data-fiche="ebe" role="button" tabindex="0">excédent brut d'exploitation</span>, <span class="terme" data-fiche="dispo" role="button" tabindex="0">revenu disponible</span>, résultat — et identifier la question à laquelle chacun répond ;</li>
+      <li>lire le <span class="terme" data-fiche="bilan" role="button" tabindex="0">bilan</span> d'une exploitation et en tirer les principaux indicateurs d'<span class="terme" data-fiche="dettes" role="button" tabindex="0">endettement</span> ;</li>
+      <li>appliquer la méthode wallonne d'évaluation de la viabilité et en discuter les limites.</li>
+    </ol>
+  </div>
+  <div class="carte"><h3 style="margin-top:0">Mode d'emploi</h3>
+    <ul>
+      <li>Le module comprend six chapitres, précédés et suivis de cinq situations de pratique, puis une courte évaluation.</li>
+      <li>Chaque terme technique est surligné en bleu : sélectionnez-le pour en afficher la définition. Le lexique complet figure à la fin du module.</li>
+      <li>Réalisez chaque activité avant de consulter la réponse ; la correction s'affiche une fois votre réponse donnée.</li>
+      <li class="js-seulement">Le menu « Aller à » permet de revenir à tout moment sur un chapitre. Votre progression est enregistrée sur cet appareil.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="chapitre" id="diag-debut" data-titre="Cinq situations de pratique" data-minutes="4" data-diagnostic="1">
+  <span class="num">Avant de commencer <span class="duree">4 min</span></span>
+  <h2>Cinq situations de pratique</h2>
+  <p>Voici cinq situations où l'économie de l'exploitation rejoint le travail du vétérinaire. Indiquez la réponse qui vous paraît la plus juste aujourd'hui, sans recherche préalable : il ne s'agit pas d'une évaluation. Vous retrouverez ces situations à la fin du module, avec les réponses commentées, et pourrez comparer.</p>
+  <div class="diag-item" data-moment="debut" data-item="s1"><p class="q">1. En fin de visite, l'éleveur vous dit : « Cette année, nous avons produit 20 % de lait en plus. Nous allons enfin pouvoir souffler. » Qu'en pensez-vous ?</p>
+    <label class="option"><input type="radio" name="debut-s1" value="a"> Il a raison : plus de lait vendu signifie plus d'argent pour vivre.</label><label class="option"><input type="radio" name="debut-s1" value="b"> Cela dépend de ce que ces litres ont coûté et de ce qu'il rembourse.</label><label class="option"><input type="radio" name="debut-s1" value="c"> Il se trompe : produire plus coûte toujours plus que cela ne rapporte.</label><label class="option"><input type="radio" name="debut-s1" value="sais"> Je ne sais pas encore</label>
+    </div>
+<div class="diag-item" data-moment="debut" data-item="s2"><p class="q">2. Un éleveur estime que son exploitation est très économe : il ne verse aucun salaire, car son épouse et lui assurent tout le travail. Que manque-t-il à son raisonnement ?</p>
+    <label class="option"><input type="radio" name="debut-s2" value="a"> Le travail du couple a une valeur, même s'il n'est pas payé.</label><label class="option"><input type="radio" name="debut-s2" value="b"> Rien : sans salaire à verser, ses coûts sont réellement plus bas.</label><label class="option"><input type="radio" name="debut-s2" value="c"> Les cotisations sociales, qui coûtent plus cher qu'un salaire.</label><label class="option"><input type="radio" name="debut-s2" value="sais"> Je ne sais pas encore</label>
+    </div>
+<div class="diag-item" data-moment="debut" data-item="s3"><p class="q">3. Sur le relevé mensuel de la laiterie, quelle ligne dépend le plus directement de votre travail de vétérinaire ?</p>
+    <label class="option"><input type="radio" name="debut-s3" value="a"> Le prix de base payé par la laiterie pour chaque 100 litres</label><label class="option"><input type="radio" name="debut-s3" value="b"> L'ajustement lié à la composition et à la richesse du lait</label><label class="option"><input type="radio" name="debut-s3" value="c"> La retenue appliquée à un lait de qualité sanitaire faible</label><label class="option"><input type="radio" name="debut-s3" value="sais"> Je ne sais pas encore</label>
+    </div>
+<div class="diag-item" data-moment="debut" data-item="s4"><p class="q">4. Un jeune éleveur vous confie : « Mon comptable trouve que la ferme gagne bien ; je peux donc emprunter pour agrandir l'étable. » Que faudrait-il vérifier ?</p>
+    <label class="option"><input type="radio" name="debut-s4" value="a"> Ce qui resterait à la famille une fois le nouveau prêt payé.</label><label class="option"><input type="radio" name="debut-s4" value="b"> Que le comptable a bien compté toutes les ventes de l'année.</label><label class="option"><input type="radio" name="debut-s4" value="c"> Que la banque accorde ce type de prêt aux jeunes éleveurs.</label><label class="option"><input type="radio" name="debut-s4" value="sais"> Je ne sais pas encore</label>
+    </div>
+<div class="diag-item" data-moment="debut" data-item="s5"><p class="q">5. La banque classe « à risque » l'élevage de votre voisine, pourtant bien conduit et productif. Qu'en concluez-vous ?</p>
+    <label class="option"><input type="radio" name="debut-s5" value="a"> Sa famille est en difficulté et devra vendre une partie des vaches.</label><label class="option"><input type="radio" name="debut-s5" value="b"> La banque se trompe, puisque l'élevage produit beaucoup.</label><label class="option"><input type="radio" name="debut-s5" value="c"> C'est un signal à examiner, qui ne dit pas tout de la famille.</label><label class="option"><input type="radio" name="debut-s5" value="sais"> Je ne sais pas encore</label>
+    </div>
+</section>
+
+<section class="chapitre" id="ch1" data-titre="1. Les prix des produits agricoles" data-minutes="14">
+  <span class="num">Chapitre 1 <span class="duree">14 min</span></span>
+  <h2>Les prix des produits agricoles : le lait et les bovins</h2>
+
+  <h3>1.1 Le prix du lait payé au producteur</h3>
+  <p>Chaque mois, l'administration wallonne publie le <span class="terme" data-fiche="barometre" role="button" tabindex="0">baromètre laitier</span>, qui donne le prix moyen du lait cru payé aux producteurs. Ce prix est exprimé en euros pour 100 litres, calculé aux teneurs réelles du lait en <span class="terme" data-fiche="mg" role="button" tabindex="0">matières grasses</span> et en protéines, <span class="terme" data-fiche="htva" role="button" tabindex="0">hors TVA</span>, primes mensuelles comprises.</p>
+  <p>Le prix effectivement payé à une exploitation figure sur le relevé mensuel de la laiterie. Il part d'un prix de base, ajusté selon la composition du lait, auquel s'ajoutent des primes de qualité et dont sont retranchées d'éventuelles pénalités, notamment lorsque le lait contient trop de <span class="terme" data-fiche="cellules" role="button" tabindex="0">cellules somatiques</span>.</p>
+  <div class="carte"><b>Relevé mensuel de la laiterie — ferme du Thier (exemple construit pour le module)</b>
+    <div class="defile"><table>
+      <thead><tr><th>Ligne du relevé</th><th>€ pour 100 litres</th></tr></thead>
+      <tbody>
+        <tr><td>Lait livré au cours du mois : 37 500 litres</td><td></td></tr>
+        <tr><td>Prix de base</td><td>34,40</td></tr>
+        <tr><td>Ajustement selon la teneur en matières grasses et en protéines</td><td>+1,80</td></tr>
+        <tr><td>Prime de qualité (faible teneur en germes)</td><td>+0,50</td></tr>
+        <tr><td>Pénalité pour teneur élevée en cellules somatiques</td><td>−1,50</td></tr>
+        <tr><td><b>Prix payé</b></td><td><b>35,20</b></td></tr>
+        <tr><td><b>Montant du mois, hors TVA</b></td><td><b>13 200,00 €</b></td></tr>
+      </tbody></table></div>
+    <p class="source">Les montants des primes et des pénalités sont fictifs : ils varient d'une laiterie à l'autre.</p>
+  </div>
+  <div class="activite calcul" data-id="p1" data-attendu="562.5">
+    <span class="etiquette">Activité 1.1 — Calcul</span>
+    <p class="consigne">La pénalité pour cellules somatiques s'élève à 1,50 € par 100 litres et la ferme a livré 37 500 litres ce mois-ci. Quel montant cette pénalité représente-t-elle pour le mois ?</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>37 500 litres ÷ 100 × 1,50 € = <b>562,50 €</b> pour le mois, soit environ 6 750 € sur une année si la situation se prolonge. Ce montant est à comparer au coût d'un plan de maîtrise des mammites.</div></details>
+  </div>
+  <div class="activite qcm" data-id="p2" data-bonne="c">
+    <span class="etiquette">Activité 1.2 — Question</span>
+    <p class="consigne">Parmi les lignes du relevé, laquelle dépend le plus directement de l'état sanitaire du troupeau, et donc du travail du vétérinaire ?</p>
+    <label class="option" data-retour="Non : le prix de base dépend du marché laitier et de la laiterie, pas de l'exploitation."><input type="radio" name="p2" value="a"> Le prix de base</label>
+    <label class="option" data-retour="Non : la composition du lait dépend surtout de la génétique et de l'alimentation."><input type="radio" name="p2" value="b"> L'ajustement selon la teneur en matières grasses et en protéines</label>
+    <label class="option" data-retour="Oui : le nombre de cellules somatiques augmente avec les mammites."><input type="radio" name="p2" value="c"> La pénalité pour teneur élevée en cellules somatiques</label>
+    <details class="reponse"><summary>Voir la correction</summary><div>La pénalité pour cellules somatiques. Leur nombre augmente en cas de mammite ; la qualité sanitaire du troupeau se traduit donc directement, et chaque mois, sur le revenu laitier de l'exploitation.</div></details>
+  </div>
+
+  <h3>1.2 Les modes de vente et le classement des bovins</h3>
+  <p>Un bovin peut être vendu de deux manières :</p>
+  <ol>
+    <li><b>vivant</b>, sur un marché aux bestiaux, à un prix exprimé au <span class="terme" data-fiche="vif" role="button" tabindex="0">poids vif</span> (en euros pour 100 kg ou par kilo). Les prix pratiqués sont publiés dans les <span class="terme" data-fiche="mercuriale" role="button" tabindex="0">mercuriales</span> des marchés de Ciney et de Battice, par catégorie d'animal : <span class="terme" data-fiche="culard" role="button" tabindex="0">culard</span> (type Blanc-Bleu Belge), assimilé, mixte, pie noire ou pie rouge ;</li>
+    <li><b>abattu</b>, à un prix exprimé au kilo de <span class="terme" data-fiche="carcasse" role="button" tabindex="0">carcasse</span>. La carcasse reçoit à l'abattoir une classe de conformation selon la grille <span class="terme" data-fiche="seurop" role="button" tabindex="0">SEUROP</span>, complétée par une note d'engraissement de 1 à 5.</li>
+  </ol>
+  <div class="activite classer" data-id="p3">
+    <span class="etiquette">Activité 1.3 — Classement</span>
+    <p class="consigne">Attribuez à chaque description de carcasse sa classe de conformation SEUROP.</p>
+    <div class="item" data-bonne="S" data-retour="Classe S (supérieure) : conformation de type culard, sans défaut sur les parties essentielles."><span>Conformation de type culard, sans aucun défaut</span><div class="choix"><button type="button" data-v="S">S</button><button type="button" data-v="E">E</button><button type="button" data-v="R">R</button><button type="button" data-v="P">P</button></div></div>
+    <div class="item" data-bonne="E" data-retour="Classe E (excellente) : profils très convexes, sans défaut."><span>Profils très convexes, sans aucun défaut</span><div class="choix"><button type="button" data-v="S">S</button><button type="button" data-v="E">E</button><button type="button" data-v="R">R</button><button type="button" data-v="P">P</button></div></div>
+    <div class="item" data-bonne="R" data-retour="Classe R (bonne) : profils rectilignes."><span>Profils rectilignes</span><div class="choix"><button type="button" data-v="S">S</button><button type="button" data-v="E">E</button><button type="button" data-v="R">R</button><button type="button" data-v="P">P</button></div></div>
+    <div class="item" data-bonne="P" data-retour="Classe P (médiocre) : profils concaves à très concaves."><span>Profils concaves à très concaves</span><div class="choix"><button type="button" data-v="S">S</button><button type="button" data-v="E">E</button><button type="button" data-v="R">R</button><button type="button" data-v="P">P</button></div></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>S : type culard · E : très convexe · U : convexe · R : rectiligne · O : rectiligne à concave · P : concave à très concave. Les classes S et E n'admettent aucun défaut sur les parties essentielles ; pour U, R, O et P, la classe retenue est celle que présentent deux des trois critères observés.</div></details>
+  </div>
+  <div class="situation"><span class="qui">Sophie, éleveuse de Blanc-Bleu</span>
+    <p>Pour un taurillon, on propose à Sophie 2,40 € par kilo vif sur le marché de Ciney, tandis que l'abattoir lui propose 4,60 € par kilo de carcasse. Elle vous demande laquelle des deux offres est la plus avantageuse. <span class="source">(Ces prix sont fictifs, à titre d'illustration.)</span></p>
+  </div>
+  <p>Les deux offres ne sont pas exprimées dans la même unité. Pour les comparer, il faut connaître le <span class="terme" data-fiche="rendement" role="button" tabindex="0">rendement carcasse</span> de l'animal, c'est-à-dire la proportion de son poids vif qui deviendra carcasse.</p>
+  <div class="activite calcul" data-id="p4" data-attendu="2.76" data-tol="0.02">
+    <span class="etiquette">Activité 1.4 — Calcul</span>
+    <p class="consigne">Le taurillon de Sophie a un rendement carcasse de 60 % : 100 kg de poids vif donnent 60 kg de carcasse. À quel prix par kilo vif correspond l'offre de l'abattoir (4,60 € par kilo de carcasse) ?</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Euros par kilo vif"><span>€ par kilo vif</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>4,60 € × 0,60 = <b>2,76 €</b> par kilo vif, soit davantage que les 2,40 € proposés sur le marché : l'offre de l'abattoir est la plus avantageuse. Avec un rendement de 50 %, elle ne vaudrait plus que 2,30 € par kilo vif et deviendrait la moins intéressante. Deux prix ne se comparent qu'une fois exprimés dans la même unité.</div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li>Le prix du lait se lit en euros pour 100 litres, hors TVA, aux teneurs réelles ; le relevé de la laiterie y ajoute primes et pénalités, dont celle liée aux cellules somatiques.</li>
+    <li>Un bovin se vend au poids vif ou au poids de carcasse ; le rendement carcasse permet de passer de l'un à l'autre.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="ch2" data-titre="2. Les produits et les charges" data-minutes="10">
+  <span class="num">Chapitre 2 <span class="duree">10 min</span></span>
+  <h2>Les produits et les charges de l'exploitation</h2>
+
+  <h3>2.1 Les produits</h3>
+  <p>Les <span class="terme" data-fiche="produits" role="button" tabindex="0">produits</span> regroupent l'ensemble des ressources de l'exploitation sur l'exercice. Pour la ferme du Thier, sur une année ordinaire :</p>
+  <div class="cascade">
+    <div><span>Ventes de lait (450 000 litres à 0,352 € le litre)</span><b>158 400 €</b></div>
+    <div><span>Ventes d'animaux (veaux, vaches de réforme)</span><b>18 000 €</b></div>
+    <div><span><span class="terme" data-fiche="aides" role="button" tabindex="0">Aides publiques</span></span><b>29 250 €</b></div>
+  </div>
+  <p>Certains produits ne correspondent à aucune entrée d'argent. C'est le cas de la <span class="terme" data-fiche="inventaire" role="button" tabindex="0">variation d'inventaire</span> du cheptel : une génisse née et conservée accroît la valeur du troupeau sans qu'aucune vente n'ait eu lieu.</p>
+
+  <h3>2.2 Les quatre critères de classement des charges</h3>
+  <p>Les charges se classent selon quatre critères, présentés dans les diapositives du cours :</p>
+  <ol>
+    <li><b>Variable ou fixe.</b> Les <span class="terme" data-fiche="chop" role="button" tabindex="0">charges opérationnelles</span> varient avec le volume produit (aliments, frais vétérinaires, insémination) ; les <span class="terme" data-fiche="chstr" role="button" tabindex="0">charges de structure</span> sont supportées quel que soit ce volume (énergie, entretien, assurances).</li>
+    <li><b>Spécifique ou multifonctionnelle.</b> Une charge spécifique se rattache à un seul <span class="terme" data-fiche="atelier" role="button" tabindex="0">atelier de production</span>, comme la poudre de lait des veaux ; une charge multifonctionnelle sert à plusieurs ateliers, comme le carburant du tracteur.</li>
+    <li><b>Annuelle ou pluriannuelle.</b> Le coût d'un bien utilisé plusieurs années est réparti sur sa durée d'usage : c'est l'<span class="terme" data-fiche="amort" role="button" tabindex="0">amortissement</span>.</li>
+    <li><b>Réelle ou <span class="terme" data-fiche="impute" role="button" tabindex="0">imputée</span>.</b> Une charge réelle donne lieu à un paiement ; un coût imputé, ou coût d'opportunité, valorise une ressource utilisée sans être payée : le travail de la famille, les terres en propriété, les <span class="terme" data-fiche="cappropre" role="button" tabindex="0">capitaux propres</span> investis. Les terres louées, elles, donnent lieu à un paiement, le <span class="terme" data-fiche="fermage" role="button" tabindex="0">fermage</span>.</li>
+  </ol>
+  <div class="activite classer" data-id="k1">
+    <span class="etiquette">Activité 2.1 — Classement</span>
+    <p class="consigne">Pour chaque dépense de la ferme du Thier, indiquez le critère qui la caractérise le mieux.</p>
+    <div class="item" data-bonne="variable" data-retour="Les achats d'aliments augmentent avec la production : charge opérationnelle."><span>Aliments concentrés achetés</span><div class="choix"><button type="button" data-v="variable">Opérationnelle</button><button type="button" data-v="fixe">De structure</button><button type="button" data-v="plurian">Pluriannuelle</button><button type="button" data-v="imput">Coût imputé</button></div></div>
+    <div class="item" data-bonne="fixe" data-retour="Le fermage est dû quel que soit le volume produit : charge de structure."><span>Fermage des terres louées</span><div class="choix"><button type="button" data-v="variable">Opérationnelle</button><button type="button" data-v="fixe">De structure</button><button type="button" data-v="plurian">Pluriannuelle</button><button type="button" data-v="imput">Coût imputé</button></div></div>
+    <div class="item" data-bonne="plurian" data-retour="Son coût est réparti sur sa durée d'usage par l'amortissement."><span>Tracteur acheté pour dix ans</span><div class="choix"><button type="button" data-v="variable">Opérationnelle</button><button type="button" data-v="fixe">De structure</button><button type="button" data-v="plurian">Pluriannuelle</button><button type="button" data-v="imput">Coût imputé</button></div></div>
+    <div class="item" data-bonne="imput" data-retour="Aucun paiement n'est effectué, mais ce travail a une valeur : coût imputé."><span>Heures de travail de Marc, non rémunérées</span><div class="choix"><button type="button" data-v="variable">Opérationnelle</button><button type="button" data-v="fixe">De structure</button><button type="button" data-v="plurian">Pluriannuelle</button><button type="button" data-v="imput">Coût imputé</button></div></div>
+    <div class="item" data-bonne="variable" data-retour="Les honoraires augmentent avec le nombre de vêlages : charge opérationnelle."><span>Honoraires vétérinaires liés aux vêlages</span><div class="choix"><button type="button" data-v="variable">Opérationnelle</button><button type="button" data-v="fixe">De structure</button><button type="button" data-v="plurian">Pluriannuelle</button><button type="button" data-v="imput">Coût imputé</button></div></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>Aliments concentrés : charge opérationnelle · Fermage : charge de structure · Tracteur : charge pluriannuelle (amortissement) · Heures de Marc : coût imputé · Honoraires de vêlage : charge opérationnelle.</div></details>
+  </div>
+
+  <h3>2.3 La structure des charges des exploitations wallonnes</h3>
+  <div class="activite qcm" data-id="q22">
+    <span class="etiquette">Activité 2.2 — Estimation</span>
+    <p class="consigne">Dans une exploitation laitière wallonne moyenne, quelle part des charges les frais vétérinaires représentent-ils ?</p>
+    <label class="option"><input type="radio" name="q22" value="4"> Environ 4 %</label>
+    <label class="option"><input type="radio" name="q22" value="12"> Environ 12 %</label>
+    <label class="option"><input type="radio" name="q22" value="25"> Environ 25 %</label>
+    <details class="reponse"><summary>Voir la correction</summary><div>
+      <p><b>Environ 4 %.</b> Répartition des charges des exploitations laitières wallonnes en 2017 :</p>
+      <div class="barres" aria-label="Répartition des charges en pourcentage">
+        <div class="barre"><span>Alimentation</span><i style="width:100%"></i><span>28 %</span></div>
+        <div class="barre"><span><span class="terme" data-fiche="foncier" role="button" tabindex="0">Foncier</span></span><i style="width:75%"></i><span>21 %</span></div>
+        <div class="barre"><span>Charges matérielles</span><i style="width:57%"></i><span>16 %</span></div>
+        <div class="barre"><span><span class="terme" data-fiche="tiers" role="button" tabindex="0">Travaux par tiers</span></span><i style="width:32%"></i><span>9 %</span></div>
+        <div class="barre"><span>Énergie</span><i style="width:21%"></i><span>6 %</span></div>
+        <div class="barre"><span>Divers</span><i style="width:21%"></i><span>6 %</span></div>
+        <div class="barre"><span>Engrais</span><i style="width:18%"></i><span>5 %</span></div>
+        <div class="barre vet"><span>Vétérinaire</span><i style="width:14%"></i><span>4 %</span></div>
+        <div class="barre"><span>Semences et phytos</span><i style="width:14%"></i><span>4 %</span></div>
+      </div>
+      <p>Dans les exploitations viandeuses, les frais vétérinaires représentent 9 % des charges et 18 % des charges opérationnelles. Leur part est modeste, mais le vétérinaire agit sur les postes les plus importants : l'alimentation, la reproduction et la longévité des animaux.</p>
+      <p class="source">Source : <span class="terme" data-fiche="spw" role="button" tabindex="0">SPW</span>, Évolution de l'économie agricole et horticole de la Wallonie, données 2017 (chapitre « Économie rurale » du cours).</p>
+    </div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li>Les produits comprennent les ventes, les aides et la variation d'inventaire du cheptel.</li>
+    <li>Une charge se caractérise par quatre critères : variable ou fixe, spécifique ou multifonctionnelle, annuelle ou pluriannuelle, réelle ou imputée.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="ch3" data-titre="3. De la marge brute à l'excédent brut d'exploitation" data-minutes="12">
+  <span class="num">Chapitre 3 <span class="duree">12 min</span></span>
+  <h2>Les soldes de gestion : de la marge brute à l'excédent brut d'exploitation</h2>
+  <div class="situation"><span class="qui">Léo, fils des exploitants</span>
+    <p>« L'an dernier, le comptable a dit que notre <span class="terme" data-fiche="ebe" role="button" tabindex="0">EBE</span> était bon. Nous pourrions donc emprunter pour agrandir l'étable. » Pour lui répondre, il faut d'abord savoir ce que mesure l'EBE, et comment on y arrive à partir des <span class="terme" data-fiche="produits" role="button" tabindex="0">produits</span>.</p>
+  </div>
+  <p>La comptabilité de gestion décompose le résultat en soldes successifs. Chacun retranche une catégorie de charges et répond à une question différente. Les montants ci-dessous sont ceux de la ferme du Thier sur une année ordinaire.</p>
+
+  <h3>3.1 La marge brute</h3>
+  <p>La <span class="terme" data-fiche="mb" role="button" tabindex="0">marge brute</span> d'un <span class="terme" data-fiche="atelier" role="button" tabindex="0">atelier</span> est égale à ses produits, hors <span class="terme" data-fiche="aides" role="button" tabindex="0">aides</span>, diminués de ses <span class="terme" data-fiche="chop" role="button" tabindex="0">charges opérationnelles</span>. Rapportée à une unité de production, elle permet de comparer des troupeaux du même type.</p>
+  <div class="activite calcul" data-id="c31" data-attendu="113400">
+    <span class="etiquette">Activité 3.1 — Calcul</span>
+    <p class="consigne">Les ventes de la ferme du Thier s'élèvent à 176 400 € et ses charges opérationnelles à 63 000 €. Calculez sa marge brute.</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>176 400 € − 63 000 € = <b>113 400 €</b>. Rapportée à 1 000 litres, cette marge brute s'élève à 252 €, à comparer à la moyenne wallonne de 243 € pour 1 000 litres (2011-2015).</div></details>
+  </div>
+
+  <h3>3.2 La valeur ajoutée brute</h3>
+  <p>La <span class="terme" data-fiche="vab" role="button" tabindex="0">valeur ajoutée brute</span> mesure la richesse créée par l'exploitation. Elle s'obtient en ajoutant à la marge brute les aides (29 250 €) et en retranchant les <span class="terme" data-fiche="chstr" role="button" tabindex="0">charges de structure</span>, à l'exception des salaires payés et des <span class="terme" data-fiche="fermage" role="button" tabindex="0">fermages</span>. À la ferme du Thier, ces charges de structure s'élèvent à 41 600 €.</p>
+  <div class="activite calcul" data-id="c32" data-attendu="101050">
+    <span class="etiquette">Activité 3.2 — Calcul</span>
+    <p class="consigne">Calculez la valeur ajoutée brute de la ferme du Thier : marge brute (113 400 €) + aides (29 250 €) − charges de structure hors salaires et fermages (41 600 €).</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>113 400 € + 29 250 € − 41 600 € = <b>101 050 €</b>. Cette richesse sera ensuite répartie entre les salariés, les propriétaires des terres louées et la famille exploitante.</div></details>
+  </div>
+
+  <h3>3.3 L'excédent brut d'exploitation</h3>
+  <p>L'<span class="terme" data-fiche="ebe" role="button" tabindex="0">excédent brut d'exploitation</span> est égal à la valeur ajoutée brute diminuée des salaires payés et des fermages. La ferme du Thier n'emploie pas de salarié et paie 8 400 € de fermages.</p>
+  <div class="activite calcul" data-id="c33" data-attendu="92650">
+    <span class="etiquette">Activité 3.3 — Calcul</span>
+    <p class="consigne">Calculez l'EBE de la ferme du Thier.</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>101 050 € − 8 400 € = <b>92 650 €</b>. Ni les <span class="terme" data-fiche="amort" role="button" tabindex="0">amortissements</span> ni les remboursements d'emprunts ne sont encore déduits. L'EBE ne dépend donc pas du mode de financement de l'exploitation : deux exploitations identiques, l'une endettée et l'autre non, ont le même EBE. C'est ce qui permet de comparer des exploitations entre elles et d'apprécier leur capacité à rembourser un emprunt.</div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li><b>Marge brute</b> = produits de l'atelier − charges opérationnelles : comparer des troupeaux du même type.</li>
+    <li><b>Valeur ajoutée brute</b> = marge brute + aides − charges de structure (hors salaires et fermages) : mesurer la richesse créée.</li>
+    <li><b>EBE</b> = valeur ajoutée brute − salaires − fermages : comparer des exploitations indépendamment de leur financement.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="ch4" data-titre="4. De l'EBE au revenu disponible et au résultat" data-minutes="16">
+  <span class="num">Chapitre 4 <span class="duree">16 min</span></span>
+  <h2>De l'excédent brut d'exploitation au revenu disponible et au résultat</h2>
+  <p>À partir de l'<span class="terme" data-fiche="ebe" role="button" tabindex="0">EBE</span>, l'analyse suit deux voies, qui répondent à deux questions distinctes : la famille dispose-t-elle de moyens suffisants pour vivre et épargner ? L'exploitation est-elle rentable une fois toutes les ressources qu'elle utilise rémunérées ? Pour les distinguer, il faut savoir que le remboursement d'un emprunt comprend deux éléments, le <span class="terme" data-fiche="pret" role="button" tabindex="0">capital et les intérêts</span>.</p>
+
+  <h3>4.1 Le revenu disponible et la capacité d'épargne</h3>
+  <p>Le <span class="terme" data-fiche="dispo" role="button" tabindex="0">revenu disponible</span> est ce qui reste de l'EBE après paiement de l'<span class="terme" data-fiche="annuite" role="button" tabindex="0">annuité</span> des emprunts (capital et intérêts) et des investissements réalisés sur <span class="terme" data-fiche="autofin" role="button" tabindex="0">fonds propres</span>, appelés autofinancement. La famille y prélève ensuite de quoi vivre : ce sont les <span class="terme" data-fiche="prelev" role="button" tabindex="0">prélèvements privés</span>. Le solde est la <span class="terme" data-fiche="epargne" role="button" tabindex="0">capacité d'épargne</span>, qui alimente la <span class="terme" data-fiche="treso" role="button" tabindex="0">trésorerie</span>, c'est-à-dire les liquidités de l'exploitation.</p>
+  <div class="cascade">
+    <div><span>Excédent brut d'exploitation</span><b>92 650 €</b></div>
+    <div class="moins"><span>− Annuité des emprunts (capital et intérêts)</span><b>19 625 €</b></div>
+    <div class="moins"><span>− Investissements sur fonds propres (autofinancement)</span><b>8 000 €</b></div>
+    <div class="final"><span>= Revenu disponible</span><b>?</b></div>
+    <div class="moins"><span>− Prélèvements privés</span><b>48 000 €</b></div>
+    <div class="total"><span>= Capacité d'épargne</span><b>+17 025 €</b></div>
+  </div>
+  <div class="activite calcul" data-id="c41" data-attendu="65025">
+    <span class="etiquette">Activité 4.1 — Calcul</span>
+    <p class="consigne">Calculez le revenu disponible de la ferme du Thier à partir des montants ci-dessus.</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>92 650 € − 19 625 € − 8 000 € = <b>65 025 €</b>. Après les prélèvements privés (48 000 €), il reste +17 025 € d'épargne pour l'année, qui s'ajoute à la trésorerie.</div></details>
+  </div>
+  <div class="activite qcm" data-id="q42" data-bonne="b">
+    <span class="etiquette">Activité 4.2 — Question</span>
+    <p class="consigne">Léo estime qu'un EBE satisfaisant suffit à justifier un nouvel emprunt. Quel élément son raisonnement néglige-t-il ?</p>
+    <label class="option" data-retour="Non : l'EBE ne représente pas encore ce dont la famille dispose."><input type="radio" name="q42" value="a"> Aucun : un EBE satisfaisant garantit la capacité de remboursement.</label>
+    <label class="option" data-retour="Oui : la nouvelle annuité sera prélevée sur l'EBE et réduira d'autant le revenu disponible."><input type="radio" name="q42" value="b"> Les annuités se paient sur l'EBE : il faut examiner le revenu disponible qui resterait.</label>
+    <label class="option" data-retour="Non : les subventions sont incluses dans l'EBE."><input type="radio" name="q42" value="c"> L'EBE ne tient pas compte des subventions perçues.</label>
+    <details class="reponse"><summary>Voir la correction</summary><div>Un EBE satisfaisant indique que l'exploitation <em>pourrait</em> rembourser un emprunt ; il ne dit pas ce qui resterait à la famille une fois la nouvelle annuité payée. Un EBE en hausse peut ainsi s'accompagner d'un revenu disponible en baisse. Certains documents placent les remboursements avant l'EBE ; ce module suit les diapositives du cours et la méthode wallonne de 2019, qui les placent après.</div></details>
+  </div>
+
+  <h3>4.2 Le résultat et la rémunération du travail familial</h3>
+  <p>La seconde voie retranche de l'EBE les charges qui ne sont pas des sorties d'argent de l'exercice, ou qui ne sont pas payées : les <span class="terme" data-fiche="amort" role="button" tabindex="0">amortissements</span>, les intérêts (mais pas le capital remboursé) et la rémunération <span class="terme" data-fiche="impute" role="button" tabindex="0">imputée</span> du travail familial, valorisée à 10 € de l'heure par la méthode wallonne.</p>
+  <div class="cascade">
+    <div><span>Excédent brut d'exploitation</span><b>92 650 €</b></div>
+    <div class="moins"><span>− Amortissements</span><b>30 000 €</b></div>
+    <div class="moins"><span>− Intérêts des emprunts</span><b>4 200 €</b></div>
+    <div class="total"><span>= <span class="terme" data-fiche="revagri" role="button" tabindex="0">Revenu agricole</span> : ce qui reste pour rémunérer le travail familial</span><b>58 450 €</b></div>
+    <div class="moins"><span>− Rémunération imputée du travail familial (5 000 heures × 10 €)</span><b>50 000 €</b></div>
+    <div class="total"><span>= <span class="terme" data-fiche="rescour" role="button" tabindex="0">Résultat courant</span></span><b>8 450 €</b></div>
+  </div>
+  <p class="source">La méthode wallonne calcule d'abord le <span class="terme" data-fiche="resexpl" role="button" tabindex="0">résultat d'exploitation</span> (EBE − rémunération du travail familial − amortissements = 12 650 €), puis en déduit les intérêts pour obtenir le résultat courant.</p>
+  <div class="activite calcul" data-id="c43" data-attendu="13" data-tol="0.15">
+    <span class="etiquette">Activité 4.3 — Calcul</span>
+    <p class="consigne">La famille consacre 5 000 heures par an à l'exploitation. Calculez la rémunération horaire que permet son revenu disponible (65 025 €).</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Euros par heure"><span>€ par heure</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>65 025 € ÷ 5 000 heures = <b>13,0 € par heure</b>, au-dessus de la référence de 10 € utilisée par la méthode wallonne. Calculée sur le revenu agricole, qui tient compte de l'usure du matériel, la rémunération horaire est de 11,7 €.</div></details>
+  </div>
+  <div class="activite texte" data-id="t44">
+    <span class="etiquette">Activité 4.4 — Question ouverte</span>
+    <p class="consigne">Le résultat courant de la ferme du Thier (8 450 €) est très inférieur à son revenu disponible (65 025 €). Expliquez en deux ou trois phrases pourquoi ces deux montants, tous deux exacts, diffèrent autant.</p>
+    <textarea data-id="t44" aria-label="Votre réponse"></textarea>
+    <details class="reponse"><summary>Voir une réponse possible</summary><div>Le résultat courant déduit des montants qui ne sortent pas de la trésorerie pendant l'exercice : l'usure du matériel (amortissements) et la valeur du travail familial, comptée à 10 € de l'heure. Le revenu disponible, lui, ne déduit que les sommes effectivement payées, dont le capital remboursé. Le premier indique si l'exploitation rémunère toutes les ressources qu'elle utilise ; le second, de quels moyens la famille dispose pour vivre et épargner.</div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li><b>Revenu disponible</b> = EBE − annuités − autofinancement : les moyens dont la famille dispose.</li>
+    <li><b>Résultat courant</b> = EBE − amortissements − intérêts − travail familial imputé : la rentabilité, toutes ressources rémunérées.</li>
+    <li>Le résultat déduit les intérêts et l'usure ; le revenu disponible déduit l'annuité entière, capital compris.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="ch5" data-titre="5. Le bilan et l'endettement" data-minutes="8">
+  <span class="num">Chapitre 5 <span class="duree">8 min</span></span>
+  <h2>Le bilan de l'exploitation et l'endettement</h2>
+  <p>Le <span class="terme" data-fiche="cdr" role="button" tabindex="0">compte de résultat</span>, étudié aux chapitres 3 et 4, retrace les flux d'un exercice. Le <span class="terme" data-fiche="bilan" role="button" tabindex="0">bilan</span> décrit le patrimoine de l'exploitation à une date donnée. Il comporte deux parties de même total :</p>
+  <ul>
+    <li>l'<span class="terme" data-fiche="actif" role="button" tabindex="0">actif</span>, qui recense ce que l'exploitation possède : terres en propriété, bâtiments, matériel, cheptel ;</li>
+    <li>le <span class="terme" data-fiche="passif" role="button" tabindex="0">passif</span>, qui indique comment cet actif a été financé : par les <span class="terme" data-fiche="cappropre" role="button" tabindex="0">capitaux propres</span>, qui appartiennent à l'exploitant, et par les <span class="terme" data-fiche="dettes" role="button" tabindex="0">dettes</span>, dues à des tiers.</li>
+  </ul>
+  <p>Pour la ferme du Thier, en moyenne sur l'exercice, l'actif s'élève à 700 000 € et les dettes à 112 287 €.</p>
+  <div class="activite calcul" data-id="c51" data-attendu="587713">
+    <span class="etiquette">Activité 5.1 — Calcul</span>
+    <p class="consigne">Calculez les capitaux propres de la ferme du Thier.</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Montant en euros"><span>€</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>Actif − dettes = 700 000 € − 112 287 € = <b>587 713 €</b>.</div></details>
+  </div>
+  <div class="activite calcul" data-id="c52" data-attendu="16" data-tol="0.6">
+    <span class="etiquette">Activité 5.2 — Calcul</span>
+    <p class="consigne">Quelle part de l'actif de la ferme du Thier est financée par des dettes ? Exprimez-la en pourcentage.</p>
+    <div class="saisie"><input inputmode="decimal" aria-label="Pourcentage"><span>%</span><button type="button" class="bouton verifier">Vérifier</button></div>
+    <details class="reponse"><summary>Voir la correction</summary><div>112 287 € ÷ 700 000 € = <b>16 %</b>. Ce rapport est le <span class="terme" data-fiche="rte" role="button" tabindex="0">ratio du taux d'endettement</span>, noté Rte dans la méthode wallonne ; la moyenne de l'échantillon wallon est de 24 %. L'endettement n'est pas défavorable en soi : il accroît la rentabilité tant que son coût reste inférieur à ce que rapportent les actifs financés.</div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li>Le compte de résultat décrit les flux d'un exercice ; le bilan décrit le patrimoine à une date.</li>
+    <li>Actif = capitaux propres + dettes. Le taux d'endettement rapporte les dettes à l'actif.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="ch6" data-titre="6. L'évaluation de la viabilité" data-minutes="18">
+  <span class="num">Chapitre 6 <span class="duree">18 min</span></span>
+  <h2>L'évaluation de la viabilité : la méthode wallonne de 2019</h2>
+  <p>La Direction de l'analyse économique agricole (<span class="terme" data-fiche="spw" role="button" tabindex="0">DAEA</span>) a analysé les comptabilités d'environ 350 exploitations wallonnes par an, de 2012 à 2017, pour mettre au point une méthode de détection des exploitations à risque (Miserque et Marsin, 2019). Ce chapitre en présente les résultats, les outils et les limites.</p>
+
+  <h3>6.1 Les quatre groupes de viabilité</h3>
+  <p>Les exploitations de l'échantillon ont été réparties en quatre groupes, dont le tableau suivant donne les caractéristiques moyennes.</p>
+  <div class="defile"><table>
+    <thead><tr><th>Groupe</th><th>Part des exploitations</th><th><span class="terme" data-fiche="sau" role="button" tabindex="0">SAU</span> moyenne</th><th><span class="terme" data-fiche="ebe" role="button" tabindex="0">EBE</span> moyen</th><th><span class="terme" data-fiche="annuite" role="button" tabindex="0">Annuité</span> moyenne</th><th><span class="terme" data-fiche="dettes" role="button" tabindex="0">Dettes</span> moyennes</th></tr></thead>
+    <tbody>
+      <tr><td>Sans risque</td><td>9,6 %</td><td>101 ha</td><td>155 200 €</td><td>33 000 €</td><td>145 500 €</td></tr>
+      <tr><td>Risque faible</td><td>35,5 %</td><td>85 ha</td><td>83 600 €</td><td>26 700 €</td><td>94 100 €</td></tr>
+      <tr><td>Risque moyen</td><td>33,2 %</td><td>93 ha</td><td>127 900 €</td><td>64 000 €</td><td>340 400 €</td></tr>
+      <tr><td>Risque élevé</td><td>21,7 %</td><td>75 ha</td><td>34 800 €</td><td>33 500 €</td><td>135 900 €</td></tr>
+    </tbody></table></div>
+  <p class="source">Source : Miserque O. et Marsin J.-M., <em>La viabilité des exploitations agricoles</em>, SPW-DAEA, 2019, tableau 1.</p>
+  <div class="activite qcm" data-id="q61" data-bonne="b">
+    <span class="etiquette">Activité 6.1 — Lecture du tableau</span>
+    <p class="consigne">Dans le tableau ci-dessus, le groupe « risque moyen » présente un EBE moyen de 127 900 €, supérieur à celui du groupe « risque faible » (83 600 €). Pourquoi est-il néanmoins classé dans un groupe plus risqué ?</p>
+    <label class="option" data-retour="Non : la SAU moyenne du groupe à risque moyen (93 ha) est supérieure à celle du groupe à risque faible (85 ha)."><input type="radio" name="q61" value="a"> Parce que ses exploitations sont plus petites que celles du groupe à risque faible.</label>
+    <label class="option" data-retour="Oui : ses dettes moyennes (340 400 €) et ses annuités (64 000 €) sont de loin les plus élevées."><input type="radio" name="q61" value="b"> Parce que ses dettes, et donc ses annuités, sont également beaucoup plus élevées.</label>
+    <label class="option" data-retour="Non : le tableau ne montre pas les subventions, et l'EBE les inclut déjà."><input type="radio" name="q61" value="c"> Parce que ses exploitations reçoivent moins de subventions que les autres.</label>
+    <details class="reponse"><summary>Voir la correction</summary><div>Parce que ses dettes sont également élevées : 340 400 € en moyenne, pour une annuité de 64 000 €, soit la moitié de l'EBE. Ce groupe rassemble des exploitations performantes mais fortement endettées, aux exploitants plus jeunes ; on y trouve beaucoup d'exploitations laitières qui ont emprunté pour s'agrandir. Un EBE élevé ne suffit donc pas à garantir la viabilité.</div></details>
+  </div>
+  <p>La répartition dépend aussi de l'<span class="terme" data-fiche="ote" role="button" tabindex="0">orientation technico-économique</span>. Les exploitations de grandes cultures sont les moins exposées. Les exploitations viandeuses se situent surtout dans les groupes à risque faible ou élevé : peu endettées, car elles se sont agrandies sur <span class="terme" data-fiche="autofin" role="button" tabindex="0">fonds propres</span>, mais dépendantes des <span class="terme" data-fiche="aides" role="button" tabindex="0">aides</span> et à faible rentabilité. Les exploitations laitières présentent la plus forte proportion de risque moyen ou élevé. Enfin, les petites et moyennes exploitations sont plus souvent à risque élevé.</p>
+
+  <h3>6.2 Les ratios et le score de reclassement</h3>
+  <p>La méthode calcule huit ratios, exprimés en pourcentage, à partir du <span class="terme" data-fiche="cdr" role="button" tabindex="0">compte de résultat</span> et du <span class="terme" data-fiche="bilan" role="button" tabindex="0">bilan</span> :</p>
+  <ul>
+    <li>endettement : <span class="terme" data-fiche="rte" role="button" tabindex="0">Rte</span> (taux d'endettement), <span class="terme" data-fiche="rpa" role="button" tabindex="0">Rpa</span> (poids de l'annuité), <span class="terme" data-fiche="rrd" role="button" tabindex="0">Rrd</span> (délai de remboursement de la dette) ;</li>
+    <li>rémunération du travail familial : <span class="terme" data-fiche="rcr" role="button" tabindex="0">Rcr</span> ;</li>
+    <li>rentabilité et marge : <span class="terme" data-fiche="rrf" role="button" tabindex="0">Rrf</span> (rentabilité financière), <span class="terme" data-fiche="rre" role="button" tabindex="0">Rre</span> (rentabilité économique), <span class="terme" data-fiche="rm" role="button" tabindex="0">Rm</span> (ratio de marge), <span class="terme" data-fiche="rrif" role="button" tabindex="0">Rrif</span> (risque financier).</li>
+  </ul>
+  <p>Quatre de ces ratios entrent dans le <span class="terme" data-fiche="score" role="button" tabindex="0">score de reclassement</span> de l'exercice :</p>
+  <p style="text-align:center"><b>score = 5,256 − 0,141 × Rte + 0,0093 × Rcr − 0,016 × Rpa − 0,112 × Rrf</b></p>
+  <p>Un score supérieur à 0,5 classe l'exploitation parmi les exploitations viables ; un score inférieur à −0,5, parmi les exploitations à risque ; entre ces deux valeurs, le classement est incertain. Un second score, dit de prédiction, utilise les ratios des trois exercices précédents (Rte, Rm, Rrd, Rrif) pour anticiper le classement de l'exercice suivant.</p>
+  <div class="activite calcul-note js-seulement">
+    <span class="etiquette">Activité 6.2 — Calcul du score</span>
+    <p class="consigne">Le calculateur est prérempli avec les ratios de la ferme du Thier. Comparez son score à celui de l'exploitation C du rapport de 2019, moyennement performante mais fortement endettée.</p>
+    <div class="calc">
+      <div class="lignes-calc">
+        <label>Rte (%)<input inputmode="decimal" value="16" data-calc="Rte"></label>
+        <label>Rcr (%)<input inputmode="decimal" value="130" data-calc="Rcr"></label>
+        <label>Rpa (%)<input inputmode="decimal" value="46" data-calc="Rpa"></label>
+        <label>Rrf (%)<input inputmode="decimal" value="1.4" data-calc="Rrf"></label>
+      </div>
+      <div class="lignes-calc"><button type="button" class="bouton" data-remplir="thier">Ferme du Thier</button><button type="button" class="bouton" data-remplir="c">Exploitation C (rapport 2019)</button></div>
+      <output data-sortie="note"></output>
+    </div>
+    <details class="reponse"><summary>Voir le commentaire</summary><div>La ferme du Thier obtient un score de 3,3 : elle est classée viable. L'exploitation C obtient −4,4, comme dans le rapport : son taux d'endettement (60,7 %) et le poids de son annuité (154 %) la classent nettement à risque, malgré une activité correcte. Les ratios d'endettement sont ceux qui pèsent le plus dans le score.</div></details>
+  </div>
+  <p class="sans-js source">Ferme du Thier : score 3,3 (viable). Exploitation C du rapport de 2019 (Rte 60,7 %, Rcr 16,3 %, Rpa 154 %, Rrf −10,9 %) : score −4,4 (à risque).</p>
+  <div class="activite qcm" data-id="q63" data-bonne="b">
+    <span class="etiquette">Activité 6.3 — Question</span>
+    <p class="consigne">Dans l'équation du score de reclassement, quel est l'effet d'une augmentation du ratio de rentabilité financière (Rrf) ? Vous pouvez le vérifier à l'aide du calculateur.</p>
+    <label class="option" data-retour="Non : le coefficient de Rrf est précédé d'un signe négatif."><input type="radio" name="q63" value="a"> Le score augmente, comme on peut s'y attendre.</label>
+    <label class="option" data-retour="Oui : le coefficient de Rrf est négatif."><input type="radio" name="q63" value="b"> Le score diminue, contrairement à ce qu'on attendrait.</label>
+    <label class="option" data-retour="Non : Rrf fait partie des quatre ratios de l'équation."><input type="radio" name="q63" value="c"> Le score ne change pas, car Rrf n'intervient pas.</label>
+    <details class="reponse"><summary>Voir la correction</summary><div>Le score diminue : une exploitation plus rentable pour l'exploitant obtient un score moins favorable. Les auteurs qualifient eux-mêmes cet effet d'« inverse à la logique ». Une équation établie statistiquement est un outil de repérage, non une explication causale ; elle comporte d'ailleurs un taux d'erreur de 11,5 % pour le reclassement et de 24 % pour la prédiction.</div></details>
+  </div>
+
+  <h3>6.3 Les limites de la méthode</h3>
+  <ul>
+    <li><b>Elle analyse l'exploitation, non le ménage.</b> Plus d'un quart des exploitants wallons travaillent à temps partiel et de nombreux conjoints ont un revenu extérieur : une exploitation classée à risque peut appartenir à une famille sans difficulté financière, et inversement.</li>
+    <li><b>Elle décrit un exercice donné.</b> Sur six ans, trois exploitations sur quatre ont changé de groupe ; un investissement raisonnable peut faire passer une exploitation dans un groupe à risque pendant quelques années.</li>
+    <li><b>Elle ne prend en compte que des données économiques.</b> La charge de travail, la santé du troupeau ou les effets environnementaux n'y figurent pas.</li>
+  </ul>
+  <div class="activite texte" data-id="t64">
+    <span class="etiquette">Activité 6.4 — Question ouverte</span>
+    <p class="consigne">Léo emprunte pour agrandir l'étable. L'année suivante, la ferme du Thier est classée à risque par la méthode. En trois ou quatre phrases, expliquez ce que ce classement indique et ce qu'il n'indique pas.</p>
+    <textarea data-id="t64" aria-label="Votre réponse"></textarea>
+    <details class="reponse"><summary>Voir une réponse possible</summary><div>Le classement indique qu'après l'emprunt, l'exploitation est plus fragile : ses dettes et ses annuités ont augmenté, et une mauvaise année de prix la mettrait en difficulté. Il ne dit pas si l'investissement deviendra rentable, puisqu'il ne décrit qu'un exercice ; il ne tient pas compte d'éventuels revenus extérieurs du ménage ; et il ne mesure ni la charge de travail supplémentaire ni ses effets sur la famille. Il signale un point à examiner, non une conclusion.</div></details>
+  </div>
+  <div class="retenir"><h3>À retenir</h3><ul>
+    <li>L'endettement est le facteur qui distingue le mieux les exploitations viables des exploitations à risque.</li>
+    <li>Le score de reclassement combine Rte, Rcr, Rpa et Rrf ; entre −0,5 et 0,5, il ne permet pas de conclure.</li>
+    <li>La méthode repère des situations à examiner ; elle n'analyse ni le ménage, ni l'évolution, ni ce qui ne s'exprime pas en euros.</li>
+  </ul></div>
+</section>
+
+<section class="chapitre" id="diag-fin" data-titre="Les cinq situations, avec correction" data-minutes="5" data-diagnostic="1">
+  <span class="num">Pour terminer <span class="duree">5 min</span></span>
+  <h2>Les cinq situations de pratique, avec correction</h2>
+  <p>Répondez à nouveau aux cinq situations du début, sans consulter vos premières réponses. Après chaque réponse s'affichent un commentaire, le chapitre concerné et la réponse que vous aviez donnée au départ.</p>
+  <div class="diag-item" data-moment="fin" data-item="s1"><p class="q">1. En fin de visite, l'éleveur vous dit : « Cette année, nous avons produit 20 % de lait en plus. Nous allons enfin pouvoir souffler. » Qu'en pensez-vous ?</p>
+    <label class="option"><input type="radio" name="fin-s1" value="a"> Il a raison : plus de lait vendu signifie plus d'argent pour vivre.</label><label class="option"><input type="radio" name="fin-s1" value="b"> Cela dépend de ce que ces litres ont coûté et de ce qu'il rembourse.</label><label class="option"><input type="radio" name="fin-s1" value="c"> Il se trompe : produire plus coûte toujours plus que cela ne rapporte.</label><label class="option"><input type="radio" name="fin-s1" value="sais"> Je ne sais pas encore</label>
+    <div class="diag-retour" hidden></div><details class="reponse sans-js"><summary>Voir la réponse</summary><div><b>Cela dépend de ce que ces litres ont coûté et de ce qu'il rembourse.</b> Un volume de lait plus élevé peut laisser davantage, autant ou moins à la famille : cela dépend du coût des litres supplémentaires et des remboursements d'emprunts, qui sont prélevés sur l'excédent brut d'exploitation (chapitres 3 et 4).</div></details></div>
+<div class="diag-item" data-moment="fin" data-item="s2"><p class="q">2. Un éleveur estime que son exploitation est très économe : il ne verse aucun salaire, car son épouse et lui assurent tout le travail. Que manque-t-il à son raisonnement ?</p>
+    <label class="option"><input type="radio" name="fin-s2" value="a"> Le travail du couple a une valeur, même s'il n'est pas payé.</label><label class="option"><input type="radio" name="fin-s2" value="b"> Rien : sans salaire à verser, ses coûts sont réellement plus bas.</label><label class="option"><input type="radio" name="fin-s2" value="c"> Les cotisations sociales, qui coûtent plus cher qu'un salaire.</label><label class="option"><input type="radio" name="fin-s2" value="sais"> Je ne sais pas encore</label>
+    <div class="diag-retour" hidden></div><details class="reponse sans-js"><summary>Voir la réponse</summary><div><b>Le travail du couple a une valeur, même s'il n'est pas payé.</b> Le travail familial non rémunéré est un coût imputé : la méthode wallonne le valorise à 10 € de l'heure. Une exploitation qui ne rémunère ce travail que faiblement n'est pas économe, elle repose sur la famille (chapitres 2 et 4).</div></details></div>
+<div class="diag-item" data-moment="fin" data-item="s3"><p class="q">3. Sur le relevé mensuel de la laiterie, quelle ligne dépend le plus directement de votre travail de vétérinaire ?</p>
+    <label class="option"><input type="radio" name="fin-s3" value="a"> Le prix de base payé par la laiterie pour chaque 100 litres</label><label class="option"><input type="radio" name="fin-s3" value="b"> L'ajustement lié à la composition et à la richesse du lait</label><label class="option"><input type="radio" name="fin-s3" value="c"> La retenue appliquée à un lait de qualité sanitaire faible</label><label class="option"><input type="radio" name="fin-s3" value="sais"> Je ne sais pas encore</label>
+    <div class="diag-retour" hidden></div><details class="reponse sans-js"><summary>Voir la réponse</summary><div><b>La retenue appliquée à un lait de qualité sanitaire faible</b> La pénalité pour cellules somatiques, dont le nombre augmente avec les mammites : la qualité sanitaire du troupeau se lit chaque mois en euros sur le relevé (chapitre 1).</div></details></div>
+<div class="diag-item" data-moment="fin" data-item="s4"><p class="q">4. Un jeune éleveur vous confie : « Mon comptable trouve que la ferme gagne bien ; je peux donc emprunter pour agrandir l'étable. » Que faudrait-il vérifier ?</p>
+    <label class="option"><input type="radio" name="fin-s4" value="a"> Ce qui resterait à la famille une fois le nouveau prêt payé.</label><label class="option"><input type="radio" name="fin-s4" value="b"> Que le comptable a bien compté toutes les ventes de l'année.</label><label class="option"><input type="radio" name="fin-s4" value="c"> Que la banque accorde ce type de prêt aux jeunes éleveurs.</label><label class="option"><input type="radio" name="fin-s4" value="sais"> Je ne sais pas encore</label>
+    <div class="diag-retour" hidden></div><details class="reponse sans-js"><summary>Voir la réponse</summary><div><b>Ce qui resterait à la famille une fois le nouveau prêt payé.</b> Un excédent brut d'exploitation satisfaisant indique une capacité de remboursement, mais la nouvelle annuité sera payée sur cet excédent : c'est le revenu disponible restant, et le niveau des dettes, qu'il faut examiner (chapitres 4 et 5).</div></details></div>
+<div class="diag-item" data-moment="fin" data-item="s5"><p class="q">5. La banque classe « à risque » l'élevage de votre voisine, pourtant bien conduit et productif. Qu'en concluez-vous ?</p>
+    <label class="option"><input type="radio" name="fin-s5" value="a"> Sa famille est en difficulté et devra vendre une partie des vaches.</label><label class="option"><input type="radio" name="fin-s5" value="b"> La banque se trompe, puisque l'élevage produit beaucoup.</label><label class="option"><input type="radio" name="fin-s5" value="c"> C'est un signal à examiner, qui ne dit pas tout de la famille.</label><label class="option"><input type="radio" name="fin-s5" value="sais"> Je ne sais pas encore</label>
+    <div class="diag-retour" hidden></div><details class="reponse sans-js"><summary>Voir la réponse</summary><div><b>C'est un signal à examiner, qui ne dit pas tout de la famille.</b> Le classement repose surtout sur l'endettement de l'exploitation au cours d'une année donnée. Il ne tient compte ni des revenus extérieurs du ménage ni de l'évolution à venir : c'est un point à examiner, non une conclusion (chapitres 5 et 6).</div></details></div>
+</section>
+
+<section class="chapitre" id="evaluation" data-titre="Évaluation du module" data-minutes="5">
+  <span class="num">Pour terminer <span class="duree">5 min</span></span>
+  <h2>Évaluation du module</h2>
+  <p>Vos réponses serviront à améliorer ce module.</p>
+  <form class="eval" id="form-eval" onsubmit="return false">
+    <div class="question-eval"><p>Quelle note attribuez-vous à ce module pour ce qu'il vous a appris ? (0 = rien appris, 10 = beaucoup appris)</p>
+      <div class="echelle">
+        <label><input type="radio" name="note" value="0"> 0</label><label><input type="radio" name="note" value="1"> 1</label><label><input type="radio" name="note" value="2"> 2</label><label><input type="radio" name="note" value="3"> 3</label><label><input type="radio" name="note" value="4"> 4</label><label><input type="radio" name="note" value="5"> 5</label><label><input type="radio" name="note" value="6"> 6</label><label><input type="radio" name="note" value="7"> 7</label><label><input type="radio" name="note" value="8"> 8</label><label><input type="radio" name="note" value="9"> 9</label><label><input type="radio" name="note" value="10"> 10</label>
+      </div></div>
+    <p><b>À l'issue du module, je suis capable de…</b> (1 = pas du tout, 5 = tout à fait)</p>
+    <div class="question-eval" data-ech="o1"><p>… interpréter un prix agricole.</p></div>
+    <div class="question-eval" data-ech="o2"><p>… classer les <span class="terme" data-fiche="produits" role="button" tabindex="0">produits</span> et les charges d'une exploitation.</p></div>
+    <div class="question-eval" data-ech="o3"><p>… calculer les soldes de gestion et dire à quelle question chacun répond.</p></div>
+    <div class="question-eval" data-ech="o4"><p>… lire un <span class="terme" data-fiche="bilan" role="button" tabindex="0">bilan</span> et en tirer les indicateurs d'<span class="terme" data-fiche="dettes" role="button" tabindex="0">endettement</span>.</p></div>
+    <div class="question-eval" data-ech="o5"><p>… appliquer la méthode wallonne de viabilité et en discuter les limites.</p></div>
+    <p><b>Le module</b> (1 = pas du tout, 5 = tout à fait)</p>
+    <div class="question-eval" data-ech="clair"><p>Les explications étaient claires et précises.</p></div>
+    <div class="question-eval" data-ech="mots"><p>Les définitions des termes techniques étaient faciles à trouver et à comprendre.</p></div>
+    <div class="question-eval" data-ech="activ"><p>Les activités m'ont aidé à comprendre.</p></div>
+    <div class="question-eval" data-ech="situ"><p>Le fil conducteur (la ferme du Thier) a facilité la compréhension des chiffres.</p></div>
+    <div class="question-eval"><p>La durée du module était :</p>
+      <div class="echelle"><label><input type="radio" name="longueur" value="trop courte"> trop courte</label><label><input type="radio" name="longueur" value="adaptée"> adaptée</label><label><input type="radio" name="longueur" value="trop longue"> trop longue</label></div></div>
+    <label class="champ">Ce que je retiens principalement de ce module<textarea name="appris" style="min-height:4em"></textarea></label>
+    <label class="champ">Ce qui reste peu clair pour moi<textarea name="flou" style="min-height:4em"></textarea></label>
+    <label class="champ">Une suggestion d'amélioration<textarea name="suggestion" style="min-height:4em"></textarea></label>
+    <div class="js-seulement">
+      <button type="button" class="bouton principal" data-preparer>Préparer mes réponses</button>
+      <div data-zone-envoi hidden>
+        <p>Copiez ce texte, ou téléchargez le fichier, puis déposez-le dans l'espace prévu sur la plateforme du cours.</p>
+        <pre class="resume" data-resume></pre>
+        <div class="lignes-calc"><button type="button" class="bouton" data-copier>Copier le texte</button><button type="button" class="bouton" data-telecharger>Télécharger le fichier</button></div>
+        <p class="retour ok" data-copie hidden>Texte copié.</p>
+      </div>
+    </div>
+  </form>
+</section>
+
+<section class="chapitre lexique" id="lexique" data-titre="Lexique" data-minutes="0">
+  <span class="num">Référence</span>
+  <h2>Lexique</h2>
+  <p>Définition de chaque terme surligné dans le module.</p>
+  <div class="fiche" id="fiche-barometre"><h3>Baromètre laitier wallon</h3><p>Publication mensuelle de l'administration wallonne (Direction de la politique agricole et Direction de l'analyse économique agricole) qui donne le prix moyen du lait cru payé aux producteurs. Ce prix est exprimé en euros pour 100 litres, aux teneurs réelles en matières grasses et en protéines, hors TVA et primes mensuelles comprises. Il permet de situer le prix reçu par une exploitation par rapport à la moyenne régionale.</p></div>
+<div class="fiche" id="fiche-mg"><h3>Teneurs en matières grasses et en protéines</h3><p>Composition du lait mesurée par la laiterie à chaque collecte. Le prix de base est ajusté en fonction de ces teneurs : un lait plus riche est mieux payé. Un prix du lait ne peut donc être comparé à un autre que s'il est calculé aux mêmes teneurs.</p></div>
+<div class="fiche" id="fiche-cellules"><h3>Cellules somatiques</h3><p>Cellules, principalement des globules blancs, présentes dans le lait. Leur nombre augmente lors d'une mammite. Le droit européen fixe une limite de 400 000 cellules par millilitre pour le lait de vache cru ; au-delà de seuils fixés par chaque laiterie, des pénalités sont retenues sur le paiement. La qualité sanitaire du troupeau se traduit ainsi directement sur la facture de lait.</p></div>
+<div class="fiche" id="fiche-htva"><h3>Hors TVA (HTVA)</h3><p>Montant exprimé sans la taxe sur la valeur ajoutée. Les prix agricoles publiés sont en général donnés hors TVA ; pour comparer deux prix, il faut vérifier qu'ils sont exprimés de la même manière.</p></div>
+<div class="fiche" id="fiche-vif"><h3>Prix au poids vif</h3><p>Prix d'un animal vendu vivant, exprimé en euros pour 100 kg de poids vif (ou par kilo). C'est le prix pratiqué sur les marchés aux bestiaux et publié dans les mercuriales ; les veaux sont souvent vendus à la pièce. Il ne peut pas être comparé directement à un prix au kilo de carcasse.</p></div>
+<div class="fiche" id="fiche-carcasse"><h3>Prix à la carcasse</h3><p>Prix payé par l'abattoir ou le boucher pour un animal abattu, au kilo de carcasse, c'est-à-dire l'animal sans la tête, la peau, les pattes et les viscères. Il dépend de la classe de conformation de la carcasse (SEUROP) et de son état d'engraissement.</p></div>
+<div class="fiche" id="fiche-rendement"><h3>Rendement carcasse</h3><p>Rapport entre le poids de la carcasse et le poids vif de l'animal. Il est plus élevé chez les animaux très conformés, comme les bovins de type culard. Il permet de convertir un prix au kilo de carcasse en prix au kilo vif, et donc de comparer deux offres exprimées dans des unités différentes.</p></div>
+<div class="fiche" id="fiche-seurop"><h3>Classement SEUROP</h3><p>Grille européenne de classement des carcasses selon leur conformation : S (supérieure, type culard), E (excellente, très convexe), U (très bonne, convexe), R (bonne, rectiligne), O (assez bonne, rectiligne à concave) et P (médiocre, concave à très concave). Les classes S et E n'admettent aucun défaut sur les parties essentielles ; pour U, R, O et P, la classe retenue est celle que présentent deux des trois critères observés. Chaque classe est complétée par une note d'engraissement de 1 à 5.</p></div>
+<div class="fiche" id="fiche-culard"><h3>Culard (Blanc-Bleu Belge)</h3><p>Bovin de type Blanc-Bleu Belge (BBB) à très forte conformation. Sur les marchés, la catégorie « culard » (dite aussi « cul de poulain ») se distingue des catégories « assimilé » (croisé d'apparence semblable), « mixte » et « pie noire / pie rouge ». Ces catégories d'animaux vivants ne doivent pas être confondues avec les classes de carcasse SEUROP.</p></div>
+<div class="fiche" id="fiche-mercuriale"><h3>Mercuriale</h3><p>Relevé des prix pratiqués sur un marché, publié après chaque séance. Pour les bovins en Wallonie, les mercuriales des marchés de Ciney et de Battice donnent les prix par catégorie d'animaux et par qualité.</p></div>
+<div class="fiche" id="fiche-produits"><h3>Produits</h3><p>Ensemble des ressources de l'exploitation sur l'exercice : ventes de lait, d'animaux et de cultures, prestations de services et locations, aides publiques, ainsi que la variation d'inventaire du cheptel. Tous les produits ne correspondent pas à une entrée d'argent : la variation d'inventaire, par exemple, n'en apporte aucune.</p></div>
+<div class="fiche" id="fiche-aides"><h3>Aides publiques (PAC)</h3><p>Soutiens publics reçus par l'exploitation, principalement au titre de la politique agricole commune (PAC) de l'Union européenne : paiements découplés liés à la surface, aides à l'agriculture biologique, Natura 2000, mesures agro-environnementales, régions défavorisées et primes couplées. Elles représentent en moyenne environ un quart des produits des exploitations viandeuses wallonnes, ce qui rend ces dernières sensibles aux réformes de la PAC.</p></div>
+<div class="fiche" id="fiche-inventaire"><h3>Variation d'inventaire du cheptel</h3><p>Différence entre la valeur du cheptel en fin et en début d'exercice. Une génisse née et conservée accroît la valeur du troupeau : c'est un produit, bien qu'aucune vente n'ait eu lieu. Elle améliore le résultat comptable sans modifier la trésorerie.</p></div>
+<div class="fiche" id="fiche-chop"><h3>Charges opérationnelles</h3><p>Charges variables directement liées à un atelier de production : aliments achetés, frais vétérinaires, insémination, semences, engrais, produits phytosanitaires, travaux par tiers spécifiques. Les diapositives du cours les appellent « coûts variables spécifiques ». Retranchées des produits de l'atelier, elles donnent sa marge brute. Elles augmentent avec le volume produit : un litre supplémentaire n'est jamais sans coût.</p></div>
+<div class="fiche" id="fiche-chstr"><h3>Charges de structure</h3><p>Charges que l'exploitation supporte indépendamment du volume produit : énergie, entretien du matériel et des bâtiments, assurances, fermages, salaires payés, frais divers. Les diapositives du cours parlent de « charges réelles multifonctionnelles », car elles servent à plusieurs ateliers à la fois et ne leur sont pas réparties. Elles ne diminuent pas quand la production baisse et augmentent par paliers lors d'un agrandissement.</p></div>
+<div class="fiche" id="fiche-atelier"><h3>Atelier de production</h3><p>Activité de production d'une exploitation, considérée séparément pour l'analyse : atelier laitier, atelier viandeux, atelier de cultures. La comptabilité de gestion calcule une marge brute par atelier afin de comparer leurs contributions.</p></div>
+<div class="fiche" id="fiche-amort"><h3>Amortissement</h3><p>Répartition du coût d'un bien durable (bâtiment, machine) sur sa durée d'utilisation : un tracteur de 80 000 € utilisé dix ans est amorti à raison de 8 000 € par an. L'amortissement constate l'usure du bien ; il ne correspond à aucune sortie d'argent pendant l'exercice, puisque le paiement a eu lieu à l'achat. Il ne doit pas être confondu avec le remboursement d'un emprunt (annuité).</p></div>
+<div class="fiche" id="fiche-impute"><h3>Coût imputé (coût d'opportunité)</h3><p>Valeur attribuée à une ressource que l'exploitation utilise sans la payer : le travail de la famille, les terres dont elle est propriétaire, les capitaux propres investis. La méthode wallonne de 2019 valorise par exemple le travail familial à environ 10 € de l'heure. Sans ces coûts imputés, une exploitation peut paraître rentable alors qu'elle ne rémunère pas ceux qui y travaillent. Aucun argent ne sort : ils interviennent dans le calcul du résultat, pas dans celui du revenu disponible.</p></div>
+<div class="fiche" id="fiche-fermage"><h3>Fermage</h3><p>Loyer annuel payé au propriétaire pour les terres prises en location (bail à ferme). C'est une charge de structure. Les terres dont l'exploitant est propriétaire ne donnent pas lieu à un fermage, mais peuvent être valorisées par un fermage imputé.</p></div>
+<div class="fiche" id="fiche-foncier"><h3>Foncier</h3><p>Poste regroupant les charges liées aux terres : fermages payés et charges des terres en propriété. Il constitue le deuxième poste de charges des exploitations laitières wallonnes, après l'alimentation.</p></div>
+<div class="fiche" id="fiche-tiers"><h3>Travaux par tiers</h3><p>Travaux confiés à un entrepreneur agricole (ensilage, moisson, épandage) plutôt que réalisés avec le matériel de l'exploitation. Le recours aux tiers remplace des amortissements et des frais de matériel par une charge annuelle.</p></div>
+<div class="fiche" id="fiche-mb"><h3>Marge brute</h3><p>Produits d'un atelier moins ses charges opérationnelles (diapositives : marge brute = revenus − coûts variables spécifiques). Elle est souvent rapportée à une unité de production — 1 000 litres de lait, une vache — pour comparer des troupeaux du même type. Elle ne renseigne pas sur ce qui reste à l'exploitant, puisque les charges de structure, les remboursements et les prélèvements restent à couvrir.</p></div>
+<div class="fiche" id="fiche-vab"><h3>Valeur ajoutée brute (VAB)</h3><p>Richesse créée par l'exploitation au cours de l'exercice : marge brute des ateliers, augmentée des aides et des recettes annexes, diminuée des charges de structure à l'exception des salaires payés et des fermages. Elle mesure ce qui est produit avant d'être réparti entre ceux qui y contribuent : salariés, propriétaires des terres louées et famille exploitante.</p></div>
+<div class="fiche" id="fiche-ebe"><h3>Excédent brut d'exploitation (EBE)</h3><p>Solde de l'activité courante : produits (aides comprises) moins les charges réellement payées, sans les amortissements ni les intérêts ; ou encore valeur ajoutée brute moins les salaires payés et les fermages. L'EBE ne dépend pas du mode de financement de l'exploitation : deux exploitations identiques, l'une endettée et l'autre non, ont le même EBE. C'est pourquoi il sert à comparer des exploitations et à apprécier leur capacité à rembourser un emprunt. Il ne représente pas ce qui reste à la famille : les annuités et les investissements sur fonds propres sont prélevés ensuite. Certains documents placent les remboursements avant l'EBE ; ce module suit les diapositives du cours et la méthode wallonne de 2019, qui les placent après.</p></div>
+<div class="fiche" id="fiche-pret"><h3>Capital et intérêts d'un emprunt</h3><p>Rembourser un emprunt consiste à rendre le capital, c'est-à-dire la somme empruntée, et à payer des intérêts, qui rémunèrent le prêteur. Les intérêts sont une charge ; le capital remboursé n'en est pas une, puisque l'exploitation conserve le bien financé, mais il constitue une sortie d'argent. C'est pourquoi le résultat ne déduit que les intérêts, alors que le revenu disponible déduit l'annuité entière.</p></div>
+<div class="fiche" id="fiche-annuite"><h3>Annuité</h3><p>Somme remboursée chaque année au titre des emprunts, capital et intérêts compris. Pour un emprunt à annuités constantes, son montant est fixé à la signature et reste identique jusqu'à l'échéance. Elle est prélevée sur l'EBE ; son poids relatif est l'un des indicateurs les plus discriminants de la viabilité.</p></div>
+<div class="fiche" id="fiche-autofin"><h3>Autofinancement (investissements sur fonds propres)</h3><p>Part des investissements de l'exercice financée par les ressources propres de l'exploitation, sans recours à l'emprunt. Elle est prélevée sur l'EBE, comme l'annuité, pour obtenir le revenu disponible. Un autofinancement élevé réduit l'endettement futur, mais diminue l'argent disponible l'année de l'investissement.</p></div>
+<div class="fiche" id="fiche-dispo"><h3>Revenu disponible (moyens affectables)</h3><p>Ce qui reste de l'EBE après paiement des annuités et des investissements sur fonds propres : EBE − annuités − autofinancement. Le chapitre du cours parle aussi de « moyens affectables ». C'est sur ce montant que la famille prélève de quoi vivre et que se constitue l'épargne. Un EBE en hausse peut s'accompagner d'un revenu disponible en baisse, si les annuités augmentent davantage.</p></div>
+<div class="fiche" id="fiche-prelev"><h3>Prélèvements privés</h3><p>Sommes retirées de l'exploitation par la famille pour ses besoins personnels (logement, alimentation, éducation des enfants). Ce ne sont pas des charges de l'exploitation. La méthode wallonne de viabilité ne les prend pas en compte, car elle analyse l'exploitation et non le ménage.</p></div>
+<div class="fiche" id="fiche-epargne"><h3>Capacité d'épargne</h3><p>Part du revenu disponible qui reste après les prélèvements privés : revenu disponible − prélèvements. Elle alimente la trésorerie et constitue la réserve qui permettra d'absorber une mauvaise année ou de financer un investissement sans emprunter. Elle peut être négative : la famille puise alors dans ses réserves.</p></div>
+<div class="fiche" id="fiche-treso"><h3>Trésorerie</h3><p>Liquidités de l'exploitation, c'est-à-dire l'argent dont elle dispose sur ses comptes à une date donnée. Elle augmente ou diminue chaque année du montant de la capacité d'épargne. Lorsqu'elle devient négative, l'exploitation est à découvert et supporte des frais financiers. C'est un niveau mesuré à une date, et non un flux de l'exercice.</p></div>
+<div class="fiche" id="fiche-resexpl"><h3>Résultat d'exploitation</h3><p>Selon la méthode wallonne de 2019 : EBE − rémunération imputée du travail familial − amortissements. Il indique si l'activité couvre l'ensemble des ressources qu'elle utilise, y compris celles qu'elle ne paie pas. Il peut être faible alors que la famille dispose de revenus suffisants, puisqu'il déduit des montants qui ne sortent pas de la trésorerie.</p></div>
+<div class="fiche" id="fiche-rescour"><h3>Résultat courant</h3><p>Résultat d'exploitation diminué des intérêts des emprunts. Seuls les intérêts sont déduits, pas le capital remboursé. Rapporté aux capitaux propres, il donne le ratio de rentabilité financière.</p></div>
+<div class="fiche" id="fiche-revagri"><h3>Revenu agricole</h3><p>Ce que l'exploitation dégage pour rémunérer le travail de la famille, une fois toutes les autres charges payées ou imputées : EBE − amortissements − intérêts. C'est le résultat courant avant déduction de la rémunération imputée du travail familial. Divisé par le nombre d'heures de travail familial, il indique la rémunération horaire de ce travail.</p></div>
+<div class="fiche" id="fiche-cdr"><h3>Compte de résultat</h3><p>Document comptable qui retrace les flux d'un exercice : les produits et les charges, et les soldes successifs (marge brute, valeur ajoutée brute, EBE, résultat). Il décrit l'activité d'une année, alors que le bilan décrit le patrimoine à une date.</p></div>
+<div class="fiche" id="fiche-bilan"><h3>Bilan</h3><p>Document comptable qui décrit le patrimoine de l'exploitation à une date donnée, en général la clôture de l'exercice : à l'actif, ce qu'elle possède ; au passif, l'origine des ressources qui l'ont financé, c'est-à-dire les capitaux propres et les dettes. Les ratios d'endettement de la méthode wallonne en sont tirés.</p></div>
+<div class="fiche" id="fiche-actif"><h3>Actif</h3><p>Partie du bilan qui recense ce que l'exploitation possède : terres en propriété, bâtiments, matériel, cheptel, stocks et créances. La méthode wallonne utilise l'actif net moyen, c'est-à-dire la moyenne des valeurs à l'ouverture et à la clôture, sans le capital circulant.</p></div>
+<div class="fiche" id="fiche-passif"><h3>Passif</h3><p>Partie du bilan qui indique comment l'actif a été financé : par les capitaux propres, qui appartiennent à l'exploitant, et par les dettes, qui sont dues à des tiers. Le total du passif est toujours égal au total de l'actif.</p></div>
+<div class="fiche" id="fiche-cappropre"><h3>Capitaux propres</h3><p>Part du patrimoine qui appartient à l'exploitant : actif − dettes. Plus elle est importante, mieux l'exploitation résiste à une mauvaise année, puisqu'elle dépend moins de ses créanciers.</p></div>
+<div class="fiche" id="fiche-dettes"><h3>Dettes</h3><p>Sommes dues à des tiers : capital restant dû sur les emprunts à long terme et dettes à court terme. Elles figurent au passif du bilan. Selon la méthode wallonne de 2019, les indicateurs d'endettement sont ceux qui distinguent le mieux les exploitations viables des exploitations à risque. L'endettement n'est pas défavorable en soi : il peut accroître la rentabilité tant que son coût reste inférieur à la rentabilité économique de l'exploitation.</p></div>
+<div class="fiche" id="fiche-rte"><h3>Ratio du taux d'endettement (Rte)</h3><p>Dettes à long et court terme ÷ actif net moyen, en %. Il exprime la dépendance de l'exploitation à l'égard des financements extérieurs. Moyenne de l'échantillon wallon : 24 %. C'est le ratio qui pèse le plus dans les deux équations de la méthode.</p></div>
+<div class="fiche" id="fiche-rpa"><h3>Ratio du poids de l'annuité (Rpa)</h3><p>Annuité ÷ (EBE − rémunération brute du travail familial), en %. Il indique si l'excédent dégagé, après rémunération du travail familial, suffit à couvrir les remboursements. Au-delà de 100 %, les annuités ne peuvent être payées qu'en renonçant à rémunérer ce travail.</p></div>
+<div class="fiche" id="fiche-rrd"><h3>Ratio de délai de remboursement de la dette (Rrd)</h3><p>Dettes ÷ (EBE − rémunération brute du travail familial), en %. Il estime le nombre d'années théoriquement nécessaires pour rembourser l'ensemble des dettes : 700 % correspond à environ sept ans.</p></div>
+<div class="fiche" id="fiche-rcr"><h3>Ratio de capacité à rémunérer la main-d'œuvre familiale (Rcr)</h3><p>Revenu disponible ÷ rémunération brute du travail familial (heures × environ 10 €), en %. Une valeur de 100 % signifie que le revenu disponible permet de payer chaque heure de travail familial à ce taux.</p></div>
+<div class="fiche" id="fiche-rrf"><h3>Ratio de rentabilité financière (Rrf)</h3><p>Résultat courant ÷ capitaux propres, en %. Il représente le rendement des capitaux que l'exploitant a investis dans son exploitation. Dans l'équation de reclassement de 2019, son coefficient est négatif, ce que les auteurs qualifient eux-mêmes d'« inverse à la logique ».</p></div>
+<div class="fiche" id="fiche-rre"><h3>Ratio de rentabilité économique (Rre)</h3><p>Résultat d'exploitation ÷ actif net moyen, en %. Il mesure la capacité de l'exploitation à générer un résultat avec l'ensemble de ses actifs. Tant que le coût de la dette reste inférieur à ce taux, l'endettement peut améliorer la rentabilité financière.</p></div>
+<div class="fiche" id="fiche-rm"><h3>Ratio de marge (Rm)</h3><p>(EBE − rémunération brute du travail familial) ÷ (marge brute + aides), en %. Il mesure le poids des charges de structure, hors amortissements et intérêts : plus il est faible, plus ces charges, difficiles à réduire, absorbent la marge.</p></div>
+<div class="fiche" id="fiche-rrif"><h3>Ratio de risque financier (Rrif)</h3><p>Résultat d'exploitation ÷ résultat courant, en %. Comme les deux résultats ne diffèrent que par les intérêts payés, plus ce ratio s'écarte de 100 %, plus les intérêts réduisent le résultat.</p></div>
+<div class="fiche" id="fiche-score"><h3>Scores de reclassement et de prédiction</h3><p>Deux équations établies par Miserque et Marsin (2019) à partir des comptes d'environ 350 exploitations wallonnes par an, de 2012 à 2017. Le score de reclassement (Rte, Rcr, Rpa, Rrf) classe l'exploitation pour l'exercice étudié ; le score de prédiction (Rte, Rm, Rrd, Rrif) utilise les ratios des années antérieures pour anticiper l'année suivante. Un score supérieur à 0,5 indique une exploitation viable, inférieur à −0,5 une exploitation à risque ; entre les deux, le classement est incertain. Taux d'erreur sur l'échantillon de test : 11,5 % pour le reclassement, 24 % pour la prédiction.</p></div>
+<div class="fiche" id="fiche-ote"><h3>Orientation technico-économique (OTE)</h3><p>Classement statistique européen des exploitations selon leur production dominante : grandes cultures, lait, viande bovine, bovins mixtes, polyculture-élevage. Le profil de risque diffère nettement d'une orientation à l'autre.</p></div>
+<div class="fiche" id="fiche-sau"><h3>Surface agricole utile (SAU)</h3><p>Superficie exploitée pour la production agricole (terres arables, prairies, cultures permanentes), en hectares. Elle sert à comparer la taille des exploitations ; une partie des aides lui est proportionnelle.</p></div>
+<div class="fiche" id="fiche-spw"><h3>SPW et DAEA</h3><p>Le Service public de Wallonie (SPW) et sa Direction de l'analyse économique agricole (DAEA), qui suit chaque année les comptabilités d'un réseau d'exploitations wallonnes. Ils publient les moyennes régionales et la méthode de détection des exploitations à risque utilisées dans ce module.</p></div>
+</section>
+
+<nav class="navchap" aria-label="Chapitre précédent ou suivant">
+  <button type="button" class="bouton" data-nav="-1">← Chapitre précédent</button>
+  <button type="button" class="bouton principal" data-nav="1">Chapitre suivant →</button>
+</nav>
+
+<aside class="feuille" role="dialog" aria-modal="false" aria-labelledby="feuille-titre" tabindex="-1">
+  <div class="feuille-tete"><h3 id="feuille-titre"></h3><button type="button" data-fermer-feuille aria-label="Fermer">×</button></div>
+  <div data-feuille-corps></div>
+</aside>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var CLE = "module-eco-bovine-v3", st = {};
+  try { st = JSON.parse(localStorage.getItem(CLE)) || {}; } catch (e) { st = {}; }
+  st.act = st.act || {}; st.txt = st.txt || {}; st.eval = st.eval || {}; st.diag = st.diag || {};
+  // Declared before anything that runs at start-up (restoring a returning student's answers).
+  var DIAG = [{"id":"s1","objectif":"O3","bonne":"b","options":{"a":"Il a raison : plus de lait vendu signifie plus d'argent pour vivre.","b":"Cela dépend de ce que ces litres ont coûté et de ce qu'il rembourse.","c":"Il se trompe : produire plus coûte toujours plus que cela ne rapporte.","sais":"Je ne sais pas encore"},"explication":"Un volume de lait plus élevé peut laisser davantage, autant ou moins à la famille : cela dépend du coût des litres supplémentaires et des remboursements d'emprunts, qui sont prélevés sur l'excédent brut d'exploitation (chapitres 3 et 4)."},{"id":"s2","objectif":"O2","bonne":"a","options":{"a":"Le travail du couple a une valeur, même s'il n'est pas payé.","b":"Rien : sans salaire à verser, ses coûts sont réellement plus bas.","c":"Les cotisations sociales, qui coûtent plus cher qu'un salaire.","sais":"Je ne sais pas encore"},"explication":"Le travail familial non rémunéré est un coût imputé : la méthode wallonne le valorise à 10 € de l'heure. Une exploitation qui ne rémunère ce travail que faiblement n'est pas économe, elle repose sur la famille (chapitres 2 et 4)."},{"id":"s3","objectif":"O1","bonne":"c","options":{"a":"Le prix de base payé par la laiterie pour chaque 100 litres","b":"L'ajustement lié à la composition et à la richesse du lait","c":"La retenue appliquée à un lait de qualité sanitaire faible","sais":"Je ne sais pas encore"},"explication":"La pénalité pour cellules somatiques, dont le nombre augmente avec les mammites : la qualité sanitaire du troupeau se lit chaque mois en euros sur le relevé (chapitre 1)."},{"id":"s4","objectif":"O3+O4","bonne":"a","options":{"a":"Ce qui resterait à la famille une fois le nouveau prêt payé.","b":"Que le comptable a bien compté toutes les ventes de l'année.","c":"Que la banque accorde ce type de prêt aux jeunes éleveurs.","sais":"Je ne sais pas encore"},"explication":"Un excédent brut d'exploitation satisfaisant indique une capacité de remboursement, mais la nouvelle annuité sera payée sur cet excédent : c'est le revenu disponible restant, et le niveau des dettes, qu'il faut examiner (chapitres 4 et 5)."},{"id":"s5","objectif":"O4+O5","bonne":"c","options":{"a":"Sa famille est en difficulté et devra vendre une partie des vaches.","b":"La banque se trompe, puisque l'élevage produit beaucoup.","c":"C'est un signal à examiner, qui ne dit pas tout de la famille.","sais":"Je ne sais pas encore"},"explication":"Le classement repose surtout sur l'endettement de l'exploitation au cours d'une année donnée. Il ne tient compte ni des revenus extérieurs du ménage ni de l'évolution à venir : c'est un point à examiner, non une conclusion (chapitres 5 et 6)."}];
+  function sauver() { try { localStorage.setItem(CLE, JSON.stringify(st)); } catch (e) { /* storage unavailable: still works */ } }
+  var racine = document.getElementById("module");
+  racine.classList.add("js"); document.documentElement.classList.add("js");
+  var $ = function (s, r) { return (r || racine).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || racine).querySelectorAll(s)); };
+  var nf = function (x, d) { return new Intl.NumberFormat("fr-BE", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }).format(x).replace(/[  ]/g, " ").replace(/^-/, "−"); };
+  function lire(t) { var x = String(t || "").replace(/[€%\s  ]|par|heure|kilo|vif|h/g, "").replace(/−/g, "-"); if (/^-?\d{1,3}(\.\d{3})+$/.test(x)) x = x.replace(/\./g, ""); x = x.replace(",", "."); return x === "" ? NaN : Number(x); }
+
+  // ---- chapters: one at a time, previous / next
+  var chaps = $$(".chapitre"), sel = $("#aller"), barre = $(".progres i");
+  chaps.forEach(function (c, i) { var o = document.createElement("option"); o.value = i; o.textContent = c.getAttribute("data-titre"); sel.appendChild(o); });
+  function montrer(i, defiler) {
+    i = Math.max(0, Math.min(chaps.length - 1, i));
+    chaps.forEach(function (c, k) { c.hidden = k !== i; });
+    st.chap = i; st.vus = st.vus || {}; st.vus[chaps[i].id] = 1; sauver();
+    sel.value = i;
+    $$("option", sel).forEach(function (o) { var k = Number(o.value); o.textContent = (st.vus[chaps[k].id] && k !== i ? "✓ " : "") + chaps[k].getAttribute("data-titre"); });
+    $('[data-nav="-1"]').disabled = i === 0; $('[data-nav="1"]').disabled = i === chaps.length - 1;
+    var acts = $$(".activite[data-id]");
+    var faits = acts.filter(function (a) { var id = a.getAttribute("data-id"); return st.act[id] || st.txt[id]; }).length;
+    barre.style.width = Math.round(100 * faits / acts.length) + "%";
+    if (defiler) { window.scrollTo(0, 0); var h = $("h2", chaps[i]); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }
+    majDiagFin();
+  }
+  sel.addEventListener("change", function () { montrer(Number(sel.value), true); });
+  $$("[data-nav]").forEach(function (b) { b.addEventListener("click", function () { montrer((st.chap || 0) + Number(b.getAttribute("data-nav")), true); }); });
+
+  // ---- term sheets: select a highlighted term to read its definition without leaving the page
+  var feuille = $(".feuille"), dernierTerme = null;
+  function ouvrirFiche(id, depuis) {
+    var f = document.getElementById("fiche-" + id); if (!f) return;
+    $("#feuille-titre").textContent = $("h3", f).textContent;
+    $("[data-feuille-corps]").innerHTML = $("p", f).outerHTML;
+    feuille.classList.add("ouverte"); dernierTerme = depuis || null; feuille.focus();
+  }
+  function fermerFiche() { feuille.classList.remove("ouverte"); if (dernierTerme) dernierTerme.focus(); }
+  $$(".terme").forEach(function (t) {
+    t.addEventListener("click", function () { ouvrirFiche(t.getAttribute("data-fiche"), t); });
+    t.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirFiche(t.getAttribute("data-fiche"), t); } });
+  });
+  $("[data-fermer-feuille]").addEventListener("click", fermerFiche);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && feuille.classList.contains("ouverte")) fermerFiche(); });
+
+  // ---- each answer is offered only once the student has answered (without the script, it is always visible)
+  function deverrouiller(a) { var d = $("details.reponse", a); if (d) d.classList.remove("verrouille"); }
+  $$(".activite").forEach(function (a) {
+    var d = $("details.reponse", a); if (!d) return;
+    var id = a.getAttribute("data-id");
+    if (id && !(st.act[id] || (st.txt[id] && st.txt[id].trim().length >= 20))) d.classList.add("verrouille");
+  });
+  // Free-text answers: the model answer appears once something substantial has been written.
+  $$(".activite.texte").forEach(function (a) {
+    var t = $("textarea", a), id = a.getAttribute("data-id");
+    var note = document.createElement("p"); note.className = "source"; note.textContent = "La réponse proposée s'affichera lorsque vous aurez rédigé la vôtre.";
+    if ($("details.reponse.verrouille", a)) t.after(note);
+    t.addEventListener("input", function () { if (t.value.trim().length >= 20) { deverrouiller(a); note.remove(); } });
+  });
+
+  // ---- multiple choice
+  $$(".qcm").forEach(function (q) {
+    var id = q.getAttribute("data-id"), bonne = q.getAttribute("data-bonne");
+    var retour = document.createElement("p"); retour.className = "retour"; retour.hidden = true;
+    var d = $("details", q); q.insertBefore(retour, d || null);
+    function marquer(v) {
+      $$(".option", q).forEach(function (o) { var inp = $("input", o); o.classList.remove("bonne", "fausse"); if (bonne && inp.checked) o.classList.add(inp.value === bonne ? "bonne" : "fausse"); });
+      var choisi = $$(".option", q).filter(function (o) { return $("input", o).checked; })[0];
+      var r = choisi && choisi.getAttribute("data-retour");
+      if (bonne && choisi) { retour.hidden = false; retour.className = "retour " + (v === bonne ? "ok" : "non"); retour.textContent = r || (v === bonne ? "Bonne réponse." : "Ce n'est pas la réponse attendue."); }
+      deverrouiller(q);
+    }
+    $$("input[type=radio]", q).forEach(function (inp) {
+      if (st.act[id] && st.act[id].v === inp.value) inp.checked = true;
+      inp.addEventListener("change", function () { st.act[id] = { v: inp.value }; sauver(); marquer(inp.value); montrer(st.chap || 0); });
+    });
+    if (st.act[id]) marquer(st.act[id].v);
+  });
+
+  // ---- numeric checks
+  $$(".calcul").forEach(function (c) {
+    var id = c.getAttribute("data-id"), att = Number(c.getAttribute("data-attendu")), tol = Number(c.getAttribute("data-tol") || Math.max(1, Math.abs(att) * 0.005));
+    var inp = $("input", c), btn = $(".verifier", c);
+    var retour = document.createElement("p"); retour.className = "retour"; retour.hidden = true; $(".saisie", c).after(retour);
+    function verifier() {
+      var x = lire(inp.value); if (isNaN(x)) return;
+      var ok = Math.abs(x - att) <= tol;
+      st.act[id] = { v: inp.value, ok: ok }; sauver();
+      retour.hidden = false; retour.className = "retour " + (ok ? "ok" : "non");
+      retour.textContent = ok ? "Résultat exact." : "Ce résultat ne correspond pas. Vérifiez les montants utilisés et l'ordre des opérations, ou consultez la correction.";
+      deverrouiller(c); montrer(st.chap || 0);
+    }
+    if (st.act[id]) { inp.value = st.act[id].v; verifier(); }
+    btn.addEventListener("click", verifier);
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter") verifier(); });
+  });
+
+  // ---- classification
+  $$(".classer").forEach(function (k) {
+    var id = k.getAttribute("data-id");
+    $$(".item", k).forEach(function (it, n) {
+      var bonne = it.getAttribute("data-bonne");
+      var retour = document.createElement("p"); retour.className = "retour"; retour.hidden = true; it.appendChild(retour);
+      function choisir(v) {
+        $$("button", it).forEach(function (b) { b.classList.remove("bonne", "fausse"); if (b.getAttribute("data-v") === v) b.classList.add(v === bonne ? "bonne" : "fausse"); });
+        retour.hidden = false; retour.className = "retour " + (v === bonne ? "ok" : "non");
+        retour.textContent = (v === bonne ? "Exact. " : "Ce n'est pas le bon critère. ") + it.getAttribute("data-retour");
+        deverrouiller(k);
+      }
+      $$("button", it).forEach(function (b) { b.addEventListener("click", function () { var v = b.getAttribute("data-v"); st.act[id] = st.act[id] || {}; st.act[id][n] = v; sauver(); choisir(v); montrer(st.chap || 0); }); });
+      if (st.act[id] && st.act[id][n]) choisir(st.act[id][n]);
+    });
+  });
+
+  // ---- free text (saved as typed)
+  $$("textarea[data-id]").forEach(function (t) {
+    var id = t.getAttribute("data-id"); if (st.txt[id]) t.value = st.txt[id];
+    t.addEventListener("input", function () { st.txt[id] = t.value; sauver(); });
+  });
+
+  // ---- the five practice situations: same items at the start (no feedback) and at the end (with comments)
+  $$(".diag-item").forEach(function (it) {
+    var moment = it.getAttribute("data-moment"), id = it.getAttribute("data-item"), cle = moment + ":" + id;
+    $$("input[type=radio]", it).forEach(function (inp) {
+      if (st.diag[cle] === inp.value) inp.checked = true;
+      inp.addEventListener("change", function () { st.diag[cle] = inp.value; sauver(); majDiagFin(); });
+    });
+  });
+  function majDiagFin() {
+    $$('.diag-item[data-moment="fin"]').forEach(function (it) {
+      var id = it.getAttribute("data-item"), q = DIAG.filter(function (d) { return d.id === id; })[0];
+      var rep = st.diag["fin:" + id], avant = st.diag["debut:" + id];
+      var zone = $(".diag-retour", it); if (!rep) { zone.hidden = true; return; }
+      zone.hidden = false; zone.innerHTML = "";
+      var p1 = document.createElement("p"); p1.className = "retour " + (rep === q.bonne ? "ok" : "non");
+      p1.textContent = (rep === q.bonne ? "Réponse attendue. " : "Réponse attendue : « " + q.options[q.bonne] + " » ") + q.explication; zone.appendChild(p1);
+      var p2 = document.createElement("p"); p2.className = "avant";
+      p2.textContent = "Votre réponse au début du module : " + (avant ? "« " + q.options[avant] + " »" : "aucune") + "."; zone.appendChild(p2);
+    });
+  }
+
+  // ---- score calculator (the 2019 classification equation)
+  var BORNES = { Rte: [0, 100], Rcr: [-250, 500], Rpa: [0, 550], Rrf: [-34, 33] };
+  // Exploitation C: values from Miserque & Marsin (2019), table 3.
+  var REMPLIR = { thier: { Rte: 16, Rcr: 130, Rpa: 46, Rrf: 1.4 }, c: { Rte: 60.7, Rcr: 16.3, Rpa: 154, Rrf: -10.9 } };
+  var note = $('[data-sortie="note"]');
+  if (note) { var majNote = function () { var r = {}; ["Rte", "Rcr", "Rpa", "Rrf"].forEach(function (k) { var v = lire($('[data-calc="' + k + '"]').value); r[k] = Math.min(BORNES[k][1], Math.max(BORNES[k][0], isNaN(v) ? 0 : v)); });
+      var s = 5.256 - 0.141 * r.Rte + 0.0093 * r.Rcr - 0.016 * r.Rpa - 0.112 * r.Rrf;
+      note.textContent = "Score de reclassement : " + nf(s, 1) + " — " + (s > 0.5 ? "exploitation viable" : s < -0.5 ? "exploitation à risque" : "classement incertain"); };
+    $$('[data-calc]').forEach(function (i) { i.addEventListener("input", majNote); });
+    $$("[data-remplir]").forEach(function (b) { b.addEventListener("click", function () { var v = REMPLIR[b.getAttribute("data-remplir")]; Object.keys(v).forEach(function (k) { $('[data-calc="' + k + '"]').value = String(v[k]).replace(".", ","); }); majNote(); }); });
+    majNote(); }
+
+  // ---- course evaluation, with the practice situations before and after
+  $$("[data-ech]").forEach(function (q) { var n = q.getAttribute("data-ech"), d = document.createElement("div"); d.className = "echelle";
+    [1, 2, 3, 4, 5].forEach(function (v) { var l = document.createElement("label"); l.innerHTML = '<input type="radio" name="' + n + '" value="' + v + '"> ' + v; d.appendChild(l); }); q.appendChild(d); });
+  var form = $("#form-eval");
+  $$("input,textarea", form).forEach(function (el) {
+    var k = el.name; if (!k) return;
+    if (el.type === "radio") { if (st.eval[k] === el.value) el.checked = true; } else if (st.eval[k]) el.value = st.eval[k];
+    el.addEventListener(el.type === "radio" ? "change" : "input", function () { st.eval[k] = el.value; sauver(); });
+  });
+  var QUESTIONS = [["note", "Note attribuée pour ce que le module a appris (0-10)"], ["o1", "Interpréter un prix agricole (1-5)"], ["o2", "Classer produits et charges (1-5)"],
+    ["o3", "Calculer et interpréter les soldes de gestion (1-5)"], ["o4", "Lire un bilan et l'endettement (1-5)"], ["o5", "Appliquer la méthode de viabilité et ses limites (1-5)"],
+    ["clair", "Clarté des explications (1-5)"], ["mots", "Définitions des termes (1-5)"], ["activ", "Utilité des activités (1-5)"], ["situ", "Utilité du fil conducteur (1-5)"],
+    ["longueur", "Durée"], ["appris", "Principal acquis"], ["flou", "Points peu clairs"], ["suggestion", "Suggestion"]];
+  function resume() {
+    var l = ["Évaluation du module « Économie de l'exploitation bovine »", "Date : " + new Date().toLocaleDateString("fr-BE"), ""];
+    QUESTIONS.forEach(function (q) { l.push(q[1] + " : " + (st.eval[q[0]] || "—")); });
+    l.push("", "Situations de pratique (objectifs · début → fin) :");
+    var debut = 0, fin = 0, etat = function (v, q) { return v ? (v === q.bonne ? "attendue" : v === "sais" ? "ne sait pas" : "autre") : "—"; };
+    DIAG.forEach(function (q) { var a = st.diag["debut:" + q.id], b = st.diag["fin:" + q.id]; if (a === q.bonne) debut++; if (b === q.bonne) fin++; l.push(q.id + " (" + q.objectif + ") : " + etat(a, q) + " → " + etat(b, q)); });
+    l.push("Réponses attendues : " + debut + "/" + DIAG.length + " au début, " + fin + "/" + DIAG.length + " à la fin.");
+    return l.join("\n");
+  }
+  $("[data-preparer]").addEventListener("click", function () { $("[data-resume]").textContent = resume(); $("[data-zone-envoi]").hidden = false; });
+  $("[data-copier]").addEventListener("click", function () { var t = resume(); var ok = function () { $("[data-copie]").hidden = false; };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, function () {}); });
+  $("[data-telecharger]").addEventListener("click", function () { var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([resume()], { type: "text/plain;charset=utf-8" })); a.download = "evaluation-module-economie-bovine.txt";
+    document.body.appendChild(a); a.click(); a.remove(); });
+
+  montrer(st.chap || 0, false);
+})();
+</script>
+</body>
+</html>
